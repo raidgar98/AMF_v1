@@ -25,10 +25,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
+        imageconverter.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        imageconverter.h \
         mainwindow.h
 
 FORMS += \
