@@ -144,7 +144,7 @@ Izimage::px_square Izimage::get_square(const Izimage::pixel &central) const
 
 
     //######## SECTION: 3
-    if(pos.first == __m_height - 1)
+    if(pos.first == __m_width - 1)
     {
         while(ret[0].size() < 3) ret[0].emplace_back(nulpix);
         ret[1].emplace_back(nulpix);
@@ -174,4 +174,52 @@ Izimage::px_square Izimage::get_square(const Izimage::pixel &central) const
          ? | \ | ?
                  ^
     */
+
+
+    //######## SECTION: 4
+
+    if(ret[2].size() == 0)
+    {
+        if(pos.second == __m_height - 1)
+        {
+            ret[2].reserve(3);
+            while(ret[2].size() < 3) ret[2].emplace_back(nulpix);
+            return ret;
+        }
+        else
+        {
+            ret[2].emplace_back(pixel(
+                                    &(__m_red[translate(pos.first-1, pos.second + 1)]),
+                                    &(__m_green[translate(pos.first-1, pos.second + 1)]),
+                                    &(__m_blue[translate(pos.first-1, pos.second + 1)])
+                                    ));
+        }
+    }
+
+    ret[2].emplace_back(pixel(
+                            &(__m_red[translate(pos.first, pos.second + 1)]),
+                            &(__m_green[translate(pos.first, pos.second + 1)]),
+                            &(__m_blue[translate(pos.first, pos.second + 1)])
+                            ));
+    ret[2].emplace_back(pixel(
+                            &(__m_red[translate(pos.first+1, pos.second + 1)]),
+                            &(__m_green[translate(pos.first+1, pos.second + 1)]),
+                            &(__m_blue[translate(pos.first+1, pos.second + 1)])
+                            ));
+
+    //After section 4
+    /*
+         S | S | S
+        -----------
+         S | S | S
+        -----------
+    ->   S | S | S
+
+    */
+
+}
+
+Izimage::idx Izimage::translate(const Izimage::idx x, const Izimage::idx y) const
+{
+    return (x + __m_width) + y;
 }

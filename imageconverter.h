@@ -35,7 +35,7 @@ public:
             pixel& operator=(const pixel&) = default;
             pixel& operator=(pixel&&) = default;
             pixel() = delete;
-            ~pixel();
+            ~pixel() = default;
             chr R() const { return *r; }
             chr G() const { return *g; }
             chr B() const { return *b; }
@@ -73,9 +73,9 @@ public:
             bool operator!=(const iterator& src) { return !operator==(src); }
 
         private:
-            schr act_r{ nullptr };
-            schr act_g{ nullptr };
-            schr act_b{ nullptr };
+            schr act_r;
+            schr act_g;
+            schr act_b;
             explicit iterator(const schr _r, const schr _g, const schr _b) : act_r{_r}, act_g{_g}, act_b{_b} {}
             friend class Izimage;
         };
