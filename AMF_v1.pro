@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
+        DamageGenerator.cpp \
         imageconverter.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        DamageGenerator.h \
         imageconverter.h \
         mainwindow.h
 

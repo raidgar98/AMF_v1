@@ -28,15 +28,15 @@ public:
 
 public:
 
-        struct pixel
+        struct pixel//czemu nie osobna klasa?
         {
 //            pixel(chr _r, chr _g, chr _b) { R(_r); G(_g); B(_b); }
             pixel(const pixel&) = default;
             pixel(pixel&&) = default;
             pixel& operator=(const pixel& src)      { R(src.R()); G(src.G()); B(src.B()); }
-            pixel& operator=(pixel&& src)           { R(src.R()); G(src.G()); B(src.B()); }
+            pixel& operator=(pixel&& src)         { R(src.R()); G(src.G()); B(src.B()); }
             pixel() = delete;
-            ~pixel(){ r = nullptr; g = nullptr; b = nullptr; }
+            ~pixel(){ r = nullptr; g = nullptr; b = nullptr; }//shared_ptr?
             chr R() const { return r != nullptr ? *r : -1; }
             chr G() const { return g != nullptr ? *g : -1; }
             chr B() const { return b != nullptr ? *b : -1; }
@@ -50,7 +50,7 @@ public:
             chr * r = nullptr, * g = nullptr, * b = nullptr;
             pixel(chr* _r, chr* _g, chr* _b) { r=(_r); g=(_g); b=(_b); _r = nullptr; _g = nullptr; _b = nullptr; }
             friend class iterator;
-            friend class Izimage;
+            friend class Izimage;//zawiera sie juz?
         };
 
 //        using row = std::vector<pixel>;

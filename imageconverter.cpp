@@ -303,4 +303,5 @@ void Izimage::iterator::operator--(int)
 Izimage::px_square::operator QString() const
 {
     //TODO
+    return "";
 }
