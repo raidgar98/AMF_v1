@@ -26,12 +26,14 @@ CONFIG += c++17
 
 SOURCES += \
         DamageGenerator.cpp \
+        DmgMap.cpp \
         imageconverter.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
         DamageGenerator.h \
+        DmgMap.h \
         imageconverter.h \
         mainwindow.h
 
