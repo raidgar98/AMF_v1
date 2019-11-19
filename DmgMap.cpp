@@ -54,31 +54,13 @@ void DmgMap::release2Dtab()
     }
     catch(std::exception &err)
     {
-        std::cout<<err.what();
+        qInfo()<<"Error release2Dtab method: "<<err.what();
     }
 }
 
 DmgMap::~DmgMap()
 {
-    /*
-    if(map_R != nullptr)
-    {
-        delete[] map_R;
-        map_R = nullptr;
-    }
 
-    if(map_G != nullptr)
-    {
-        delete[] map_G;
-        map_G = nullptr;
-    }
-
-    if(map_B != nullptr)
-    {
-        delete[] map_B;
-        map_B = nullptr;
-    }
-    */
     release2Dtab();
 }
 
@@ -116,7 +98,7 @@ bool DmgMap::isPixelSame(short *raw_R, short *raw_G, short *raw_B, short *dmg_R,
     }
     catch(std::exception& err)
     {
-        std::cout<<err.what();
+        qInfo()<<"Error isPixelSame method: "<<err.what();
         return false;
     }
 }
@@ -148,4 +130,35 @@ void DmgMap::make2DMap(short ** i_rawR,short ** i_rawG,short ** i_rawB, short **
         qInfo()<<"Erorr make2Dmap method: "<<err.what();
     }
 }
+
+void DmgMap::make3Dmap(short ***i_raw,short ***i_dmg,size_t i_width,size_t i_height)
+{
+    try
+    {
+        release2Dtab();
+        if(m_2Dmap == nullptr)
+        {
+
+                m_2Dmap= new bool*[i_height];
+                m_2Dmap[0] = new bool[i_height*i_width];
+                for (size_t i = 1; i < i_height; i++)
+                    m_2Dmap[i] = &m_2Dmap[0][i*i_width];
+        }
+
+        for(size_t i=0;i<i_width;i++)
+            for(size_t j=0; j<i_height;j++)
+            {
+                 if(i_raw[i][j][R]==i_dmg[i][j][R] && i_raw[i][j][G]==i_dmg[i][j][G] && i_raw[i][j][B]==i_dmg[i][j][B])
+                    m_2Dmap[i][j]=true;
+                 else
+                     m_2Dmap[i][j]=false;
+            }
+    }
+    catch(std::exception& err)
+    {
+        qInfo()<<"Erorr make3Dmap method: "<<err.what();
+    }
+}
+
+
 
