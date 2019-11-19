@@ -3,6 +3,18 @@
 DmgMap::DmgMap(QImage &i_raw, QImage &i_dmg)
     :m_raw{i_raw},m_dmg{i_dmg}
 {}
+DmgMap::DmgMap(size_t i_width,size_t i_height)
+{
+    m_2Dmap= new bool*[i_height];
+    m_2Dmap[0] = new bool[i_height*i_width];
+    for (size_t i = 1; i < i_height; i++)
+        m_2Dmap[i] = &m_2Dmap[0][i*i_width];
+
+    for (size_t i = 0; i < i_height; i++)
+          for (size_t j = 0; j < i_height; j++)
+              m_2Dmap[i][j]=true;
+}
+
 DmgMap::DmgMap(const DmgMap& i_src)
     :m_raw{i_src.m_raw},m_dmg{i_src.m_dmg},m_map{i_src.m_map},m_2Dwidth{i_src.m_2Dwidth},m_2Dheight{i_src.m_2Dheight}
 {
@@ -158,6 +170,10 @@ void DmgMap::make3Dmap(short ***i_raw,short ***i_dmg,size_t i_width,size_t i_hei
     {
         qInfo()<<"Erorr make3Dmap method: "<<err.what();
     }
+}
+void DmgMap::setDamagedPixel(size_t i_x,size_t i_y)
+{
+    m_2Dmap[i_x][i_y]=false;
 }
 
 

@@ -30,6 +30,7 @@ protected:
 public:
     DmgMap()=default;
     DmgMap(QImage &i_raw,QImage &i_dmg);
+    DmgMap(size_t i_width,size_t i_height);//do zrobienia
     ~DmgMap();
     DmgMap(const DmgMap&);
     DmgMap(DmgMap&&);
@@ -43,11 +44,12 @@ public:
     void setRaw(QImage &i_raw) { if(!i_raw.isNull()) m_raw=i_raw; }
     void setDmg(QImage &i_dmg) { if(!i_dmg.isNull()) m_dmg=i_dmg; }
     void setBoth(QImage &i_raw, QImage &i_dmg) { setRaw(i_raw); setDmg(i_dmg); }
-
+    void setDamagedPixel(size_t i_x,size_t i_y);
     QImage getRaw() const { return m_raw; }
     QImage getDmg() const { return m_dmg; }
     QImage getMap() { if(m_map.isNull()) makeMapImages(); return m_map; }
 
     bool ** get2Dmap(){ return m_2Dmap; }
+
 };
 
