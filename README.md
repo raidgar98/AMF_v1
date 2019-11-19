@@ -2,3 +2,4 @@
 hello
 wert
 testuje grzesti
+inpaint_nans
