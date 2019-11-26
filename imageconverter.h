@@ -10,51 +10,77 @@
 class Izimage
 {
 public:
-        using chr = short;
+
+
+        using chr = unsigned char;
         using idx = unsigned int;
         using coord = std::pair<idx, idx>;
         using schr = std::shared_ptr<chr>;
 
         #define except(msg) try{ throw(std::invalid_argument{msg}); }catch(const std::invalid_argument&){ throw; }
         #define make_schr(x) std::make_shared<chr>(x)
-        #define nulpix pixel(nullptr, nullptr, nullptr)
+        #define nulpix pixel()
+        #define to_struct(X) reinterpret_cast<
 
-        chr * __m_red = nullptr;
-        chr * __m_green = nullptr;
-        chr * __m_blue = nullptr;
+        chr * __m_data = nullptr;
 
         const idx __m_width;
         const idx __m_height;
 
 public:
 
-        struct pixel
+        struct pixel//czemu nie osobna klasa?
         {
-//            pixel(chr _r, chr _g, chr _b) { R(_r); G(_g); B(_b); }
+            pixel(const chr i_r, const chr i_g, const chr i_b, const chr i_a)
+            {
+                R(i_r);
+                G(i_g);
+                B(i_b);
+                A(i_a);
+            }
             pixel(const pixel&) = default;
             pixel(pixel&&) = default;
-            pixel& operator=(const pixel& src)      { R(src.R()); G(src.G()); B(src.B()); }
-            pixel& operator=(pixel&& src)           { R(src.R()); G(src.G()); B(src.B()); }
-            pixel() = delete;
-            ~pixel(){ r = nullptr; g = nullptr; b = nullptr; }
-            chr R() const { return r != nullptr ? *r : -1; }
-            chr G() const { return g != nullptr ? *g : -1; }
-            chr B() const { return b != nullptr ? *b : -1; }
-            void R(const chr i_r) { if(r != nullptr && i_r < 256 && i_r >= 0) (*r)=i_r; }
-            void G(const chr i_g) { if(g != nullptr && i_g < 256 && i_g >= 0) (*g)=i_g; }
-            void B(const chr i_b) { if(b != nullptr && i_b < 256 && i_b >= 0) (*b)=i_b; }
+            pixel& operator=(const pixel& src)      { R(src.R()); G(src.G()); B(src.B()); return *this; }
+            pixel& operator=(pixel&& src)           { R(src.R()); G(src.G()); B(src.B()); return *this; }
+            //in this case pixell is nullpix (full opacity)
+            ~pixel() { d_ptr = nullptr; }
+
+            //If u get nullValueExcepttion, or noObjectFoundException or smth like this with memory, u probably try to read freom Izimage::end(). blame on you
+            chr R() const { return get_ptr(d_ptr)->r; }
+            chr G() const { return get_ptr(d_ptr)->g; }
+            chr B() const { return get_ptr(d_ptr)->b; }
+            chr A() const { return get_ptr(d_ptr)->a; }
+
+            void R(const chr i_r) { get_ptr(d_ptr)->r = i_r; }
+            void G(const chr i_g) { get_ptr(d_ptr)->g = i_g; }
+            void B(const chr i_b) { get_ptr(d_ptr)->b = i_b; }
+            void A(const chr i_a) { get_ptr(d_ptr)->a = i_a; }
+
             bool operator==(const pixel& src) const;
             bool operator!=(const pixel& src) const { return !this->operator==(src); }
-            operator QString() const;
+            operator QString() const noexcept;
+            operator bool() const { return !isNull(); }
+
+            bool isNull() const { return d_ptr == nullptr; }
+
         private:
-            chr * r = nullptr, * g = nullptr, * b = nullptr;
-            pixel(chr* _r, chr* _g, chr* _b) { r=(_r); g=(_g); b=(_b); _r = nullptr; _g = nullptr; _b = nullptr; }
+
+            void * d_ptr = nullptr;
+
+            pixel() { d_ptr = nullptr; }
+            pixel(void* ptr)
+                :d_ptr{ ptr }
+            {}
+
+            // Same order as in QImage::bits(), which is required during reinterpret_cast
+            // DO NOT TOUCH
+            struct cast_struct { chr b; chr g; chr r; chr a; };
+            cast_struct* get_ptr( void* ptr ) const { return reinterpret_cast<cast_struct*>(ptr); }
+
             friend class iterator;
-            friend class Izimage;
+            friend class Izimage;//zawiera sie juz?
         };
 
-//        using row = std::vector<pixel>;
-//        using px_square = std::vector<row>;
         class px_square
         {
             std::vector<std::vector<pixel>> data;
@@ -69,24 +95,23 @@ public:
             iterator() = delete;
             iterator(const iterator&) = default;
             iterator(iterator&&) = default;
-            ~iterator() { act_r = nullptr; act_g = nullptr; act_b = nullptr; }
+            ~iterator() { act_pos = nullptr; }
 
             void operator++(int) noexcept;
             void operator--(int);
             void operator++() noexcept { this->operator++(0); }
             void operator--() { this->operator--(0); }
 
-            pixel operator->() const    { return pixel(act_r, act_g, act_b); }
-            pixel operator*() const     { return pixel(act_r, act_g, act_b); }
+            pixel operator->() const    { return pixel(act_pos); }
+            pixel operator*() const     { return pixel(act_pos); }
 
-            bool operator==(const iterator& src) { return src.act_r == act_r && src.act_g == act_g && src.act_b == act_b; }
+            bool operator==(const iterator& src) { return act_pos == src.act_pos; }
             bool operator!=(const iterator& src) { return !operator==(src); }
 
         private:
-            chr * act_r;
-            chr * act_g;
-            chr * act_b;
-            iterator(chr * _r, chr * _g, chr * _b) : act_r{_r}, act_g{_g}, act_b{_b} { _r = nullptr; _g = nullptr; _b = nullptr; }
+
+            chr * act_pos;
+            iterator(chr * _d) : act_pos{_d} { _d = nullptr; }
             friend class Izimage;
         };
 
@@ -96,19 +121,20 @@ public:
         explicit Izimage(const QImage&);
         pixel operator()(const idx x, const idx y) const;
 
-        px_square get_square(const pixel& central) const;
+        px_square get_square(const pixel& central) const { return px_square(); }
 
-        iterator begin() const { return iterator(__m_red, __m_green, __m_blue); }
-        iterator end() const { const idx max = __m_width * __m_height; return iterator(&__m_red[max], &__m_green[max], &__m_blue[max]); }
+        iterator begin() const { return iterator(__m_data); }
+        iterator end() const { const idx max = __m_width * __m_height; return iterator(&__m_data[max * sizeof(pixel::cast_struct)]); }
 
         idx width()     const noexcept  { return __m_width; }
         idx height()    const noexcept  { return __m_height; }
 
-        QImage render() const;
+        void render(QImage& dst) const;
 
 //private:
         idx translate(const idx x, const idx y) const;
         idx translate(const coord& xy) const;
         coord translate(const idx) const;
-};
 
+        static chr null_val;
+};

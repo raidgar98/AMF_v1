@@ -25,11 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 SOURCES += \
+        AverageFilter.cpp \
+        DamageGenerator.cpp \
+        DmgMap.cpp \
+        basefilter.cpp \
+        damagekasia.cpp \
+        filter_average.cpp \
         imageconverter.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        AverageFilter.h \
+        DamageGenerator.h \
+        DmgMap.h \
+        basefilter.h \
+        damagekasia.h \
+        filter_average.h \
+        global_settings.h \
         imageconverter.h \
         mainwindow.h
 
