@@ -52,6 +52,50 @@ DmgMap::DmgMap(DmgMap&& i_src)
     }
 }
 
+DmgMap& DmgMap::operator=(const DmgMap& i_src)
+{
+    try
+    {
+        m_raw=i_src.m_raw;
+        m_dmg=i_src.m_dmg;
+        m_map=i_src.m_map;
+        m_2Dwidth=i_src.m_2Dwidth;
+        m_2Dheight=i_src.m_2Dheight;
+        if(i_src.m_2Dmap!=nullptr)
+        {
+            m_2Dmap= new bool*[m_2Dheight];
+            m_2Dmap[0] = new bool[m_2Dheight*m_2Dwidth];
+                for (size_t i = 1; i < m_2Dheight; i++)
+                    m_2Dmap[i] = &m_2Dmap[0][i*m_2Dwidth];
+        }
+    } catch (std::exception& err)
+     {
+        qInfo()<<"Error copy operator: "<<err.what();
+      }
+    //return *this;
+}
+
+DmgMap& DmgMap::operator=(DmgMap&& i_src)
+{
+    try
+    {
+        m_raw=i_src.m_raw;
+        m_dmg=i_src.m_dmg;
+        m_map=i_src.m_map;
+        m_2Dwidth=i_src.m_2Dwidth;
+        m_2Dheight=i_src.m_2Dheight;
+        if(i_src.m_2Dmap!=nullptr)
+        {
+            m_2Dmap[0][0]=&i_src.m_2Dmap[0][0];
+            i_src.m_2Dmap=nullptr;
+        }
+        i_src.~DmgMap();
+    } catch (std::exception& err)
+     {
+        qInfo()<<"Error move operator: "<<err.what();
+      }
+    //return *this;
+}
 void DmgMap::release2Dtab()
 {
     try

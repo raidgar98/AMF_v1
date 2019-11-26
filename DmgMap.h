@@ -5,7 +5,8 @@
 class DmgMap
 {
 private:
-    enum  Color
+    using coord = std::pair<unsigned int ,unsigned int>;
+    enum Color
     {
 
         R=0,
@@ -30,10 +31,13 @@ protected:
 public:
     DmgMap()=default;
     DmgMap(QImage &i_raw,QImage &i_dmg);
-    DmgMap(size_t i_width,size_t i_height);//do zrobienia
+    DmgMap(size_t i_width,size_t i_height);
     ~DmgMap();
     DmgMap(const DmgMap&);
     DmgMap(DmgMap&&);
+
+    DmgMap& operator=(const DmgMap& i_src);
+    DmgMap& operator=(DmgMap&& i_src);
 
     void makeMapImages() ;
     void make2DMap(short ** i_rawR,short ** i_rawG,short ** i_rawB, short ** i_dmgR,short ** i_dmgG,short ** i_dmgB, size_t i_width,size_t i_height);
@@ -47,7 +51,9 @@ public:
     void setDamagedPixel(size_t i_x,size_t i_y);
     QImage getRaw() const { return m_raw; }
     QImage getDmg() const { return m_dmg; }
-    QImage getMap() { if(m_map.isNull()) makeMapImages(); return m_map; }
+    QImage getMap() const { return m_map; }
+
+    coord getSize() {return coord(m_2Dwidth,m_2Dheight);}
 
     bool ** get2Dmap(){ return m_2Dmap; }
 
