@@ -1,0 +1,134 @@
+
+Izimage::px_square Izimage::get_square(const Izimage::pixel &central) const
+{
+#define c(X) reinterpret_cast<chr*>(X)
+    if(central.isNull()) return px_square();
+    const idx central_position = static_cast<idx>((c(central.d_ptr) - __m_data) / sizeof(pixel::cast_struct));
+    const coord pos = translate(central_position);
+    px_square ret;
+
+    //First     =   X left  (0 - 100)   right
+    //Second    =   Y up    (0 - 100)   down
+
+    //######## SECTION: 1
+    if( pos.first == 0 )
+    {
+        ret[0].emplace_back(nulpix);
+        ret[1].emplace_back(nulpix);
+        ret[2].emplace_back(nulpix);
+    }
+    else ret[1].emplace_back(
+                pixel(
+                    &(__m_data[translate(pos.first - 1, pos.second)])
+            ));
+    //Fill central
+    ret[1].push_back(central);
+
+    //After section 1
+    /*
+          0   1   2
+
+     0    ? | \ | \
+         -----------
+     1    S | S | \
+         -----------
+     2    ? | \ | \
+          ^
+     Legend:
+         S = Seted - known value (NULL or some val)
+         \ = not even touch
+         ? = not sure is set or not
+         '^' or '->' = column or row, which has been modified
+    */
+
+    //######## SECTION: 2
+    if(pos.second == 0)
+        while(ret[0].size() < 3) ret[0].emplace_back(nulpix);
+    else
+    {
+        if(ret[1][0] != nulpix)
+            ret[0].emplace_back(pixel(
+                    &(__m_data[translate(pos.first - 1, pos.second - 1)])
+                ));
+        ret[0].emplace_back(
+                pixel(
+                    &(__m_data[translate(pos.first, pos.second-1)])
+            ));
+    }
+
+    //After section 2
+    /*
+    ->   S | S | ?
+        -----------
+         S | S | \
+        -----------
+         ? | \ | \
+    */
+
+
+    //######## SECTION: 3
+    if(pos.first == __m_width - 1)
+    {
+        while(ret[0].size() < 3) ret[0].emplace_back(nulpix);
+        ret[1].emplace_back(nulpix);
+    }
+    else
+    {
+        ret[1].emplace_back(pixel(
+                                 &(__m_data[translate(pos.first + 1, pos.second)])
+                         ));
+        if(ret[0][1] != nulpix)
+            ret[0].emplace_back(pixel(
+                                    &(__m_data[translate(pos.first + 1, pos.second - 1)])
+                            ));
+
+    }
+
+    //After section 3
+    /*
+         S | S | S
+        -----------
+         S | S | S
+        -----------
+         ? | \ | ?
+                 ^
+    */
+
+
+    //######## SECTION: 4
+
+    if(ret[2].size() == 0)
+    {
+        if(pos.second == __m_height - 1)
+        {
+            ret[2].reserve(3);
+            while(ret[2].size() < 3) ret[2].emplace_back(nulpix);
+            return ret;
+        }
+        else
+        {
+            ret[2].emplace_back(pixel(
+                                    &(__m_data[translate(pos.first-1, pos.second + 1)])
+                                    ));
+        }
+    }
+
+    ret[2].emplace_back(pixel(
+                            &(__m_data[translate(pos.first, pos.second + 1)])
+                            ));
+    ret[2].emplace_back(pixel(
+                            &(__m_data[translate(pos.first+1, pos.second + 1)])
+                            ));
+
+    //After section 4
+    /*
+         S | S | S
+        -----------
+         S | S | S
+        -----------
+    ->   S | S | S
+
+    */
+
+}
+
