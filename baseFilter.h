@@ -18,10 +18,10 @@ public:
 	virtual void setParameters(vector<double> iParameters) =0;//ustawianie parametrów jest za pomoc¹ wektora, w klasach pochodnych trzeba zdefiniowaæ, która z jego sk³adowych bêdzie wype³nia³a dany parametr
 	//w klasach pochodnych trzeba dodaæ gettery do dodanych parametrów
 	void setFixedPixel(int xPixel, int yPixel) ; //zaznacza na mapie naprawione pixele
-	uint32_t** getFixedPixel() {return fixedPixelMap;}; //zwraca wskaŸnik do mapy z naprawionymi pixelami
+	uint32_t** getFixedPixel() const {return fixedPixelMap;}; //zwraca wskaŸnik do mapy z naprawionymi pixelami
 
 	void takePicture(short ***tabRGB, uint32_t iHeight, uint32_t iLenght);  //pobiera obrazek do naprawy
-	short *** returnFixedPicture() { return picture; }; //zwraca przyjêty obraz
+	short *** returnFixedPicture() const { return picture; }; //zwraca przyjêty obraz
 	virtual void Correction()=0; //miejsce na algorytm naprawiaj¹cy obraz
 };
 
