@@ -2,14 +2,14 @@
 
 damageDistansKind DamageGenerator::kindOfDamage = damageDistansKind::euclidean;
 
-void DamageGenerator::rgbChanger(int***iTabRGB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual,const DmgMap &iDmgMap)
+void DamageGenerator::rgbChanger(int***iTabRGB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual, DmgMap &iDmgMap)
 {
 	if (-1 < xAktual && xAktual < iSizeX && -1 < yAktual && yAktual < iSizeX)
 	{
 		iTabRGB[xAktual][yAktual][0] = 0;
 		iTabRGB[xAktual][yAktual][1] = 0;
 		iTabRGB[xAktual][yAktual][2] = 0;
-		iDmgMap.setDamagePixel(xAktual, yAktual);
+		iDmgMap.setDamagedPixel(xAktual, yAktual);
 	}
 }
 
@@ -24,7 +24,7 @@ DamageGenerator::~DamageGenerator()
 
 
 
-void DamageGenerator::makeDamage(int***iTabRGB, size_t iSizeX, size_t iSizeY, size_t iDamageStartNumber, size_t iPixelDamageNumber, const DmgMap &iDmgMap)
+void DamageGenerator::makeDamage(int***iTabRGB, size_t iSizeX, size_t iSizeY, size_t iDamageStartNumber, size_t iPixelDamageNumber, DmgMap &iDmgMap)
 {
 	if (iTabRGB !=nullptr && iSizeX>0 && iSizeY>0)
 	{	
