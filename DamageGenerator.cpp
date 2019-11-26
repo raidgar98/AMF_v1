@@ -1,17 +1,15 @@
 #include "DamageGenerator.h"
-#include <cstdlib>
-#include<iostream>
-using namespace std;
 
 damageDistansKind DamageGenerator::kindOfDamage = damageDistansKind::euclidean;
 
-void DamageGenerator::rgbChanger(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual)
+void DamageGenerator::rgbChanger(int***iTabRGB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual,const DmgMap &iDmgMap)
 {
 	if (-1 < xAktual && xAktual < iSizeX && -1 < yAktual && yAktual < iSizeX)
 	{
-		*(iTabR+yAktual*iSizeX+xAktual) = 0;
-		*(iTabG + yAktual * iSizeX + xAktual) = 0;
-		*(iTabB + yAktual * iSizeX + xAktual) = 0;
+		iTabRGB[xAktual][yAktual][0] = 0;
+		iTabRGB[xAktual][yAktual][1] = 0;
+		iTabRGB[xAktual][yAktual][2] = 0;
+		iDmgMap.setDamagePixel(xAktual, yAktual);
 	}
 }
 
@@ -26,17 +24,17 @@ DamageGenerator::~DamageGenerator()
 
 
 
-void DamageGenerator::makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, size_t iDamageStartNumber, size_t iPixelDamageNumber)
+void DamageGenerator::makeDamage(int***iTabRGB, size_t iSizeX, size_t iSizeY, size_t iDamageStartNumber, size_t iPixelDamageNumber, const DmgMap &iDmgMap)
 {
-	if (iTabR!=nullptr && iTabG != nullptr && iTabB != nullptr && iSizeX>0 && iSizeY>0)
+	if (iTabRGB !=nullptr && iSizeX>0 && iSizeY>0)
 	{	
-		random_device randomGenerator;
+		std::random_device randomGenerator;
 		int xCenter;
 		int yCenter;
 		int xAktual;
 		int yAktual;
-		uniform_int_distribution<int> uIntDistX(0, iSizeX);
-		uniform_int_distribution<int> uIntDistY(0, iSizeY);
+		std::uniform_int_distribution<int> uIntDistX(0, iSizeX);
+		std::uniform_int_distribution<int> uIntDistY(0, iSizeY);
 
 		for (size_t i = 0; i < iDamageStartNumber; i++)
 		{
@@ -51,8 +49,7 @@ void DamageGenerator::makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX,
 					
 					xAktual = xCenter - (int)sqrt(iPixelDamageNumber) / 2 + pixelNumber % (int)sqrt(iPixelDamageNumber);
 					yAktual = yCenter - (int)sqrt(iPixelDamageNumber) / 2 + pixelNumber / (int)sqrt(iPixelDamageNumber);
-					cout << xAktual << "\t" << yAktual << endl;
-					rgbChanger(iTabR, iTabG, iTabB, iSizeX, iSizeY, xAktual, yAktual);
+					rgbChanger(iTabRGB, iSizeX, iSizeY, xAktual, yAktual, iDmgMap);
 				}
 				break;
 
@@ -76,8 +73,7 @@ void DamageGenerator::makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX,
 						{
 							xAktual = xCenter + i;
 							yAktual = yCenter + j;
-							cout << xAktual << "\t" << yAktual << endl;
-							rgbChanger(iTabR, iTabG, iTabB, iSizeX, iSizeY, xAktual, yAktual);
+							rgbChanger(iTabRGB, iSizeX, iSizeY, xAktual, yAktual, iDmgMap);
 							if (++pixelNumber > iPixelDamageNumber)
 							{
 								break;

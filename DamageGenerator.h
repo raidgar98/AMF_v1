@@ -1,9 +1,7 @@
 #pragma once
 #include<random>
-#include<ctime>
-#include<math.h>
-//#include"damageKind.h"
-using namespace std;
+#include"DmgMap.h"
+
 
 enum damageDistansKind
 {
@@ -14,7 +12,7 @@ enum damageDistansKind
 class DamageGenerator
 {
 private:
-	static void rgbChanger(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual);
+	static void rgbChanger(int***iTabRGB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual, const DmgMap &iDmgMap);
 
 protected:
 	static damageDistansKind kindOfDamage;
@@ -23,7 +21,7 @@ public:
     DamageGenerator();
     ~DamageGenerator();
 
-    static void makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, size_t iDamageCenterNumber, size_t iPixelDamageNumber);
+    static void makeDamage(int***iTabRGB, size_t iSizeX, size_t iSizeY, size_t iDamageCenterNumber, size_t iPixelDamageNumber,const DmgMap  &iDmgMap);
 	static void setKindOfDamage(damageDistansKind iKindOfDamage) { kindOfDamage = iKindOfDamage; }
 };
 
