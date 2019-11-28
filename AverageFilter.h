@@ -9,35 +9,25 @@ class AverageFilter
         : public baseFilter
 {
 private:
-    enum  Color
+
+    enum
     {
+        NIE_USTAWIONO = -1,
+        ZAPIS_JAKO_ZDJECIE = 0,
+        ZAPIS_JAKO_MASKA_3D = 1
+    }m_Param{ NIE_USTAWIONO };
 
-        R=0,
-        G=1,
-        B=2
-
-    };
-double m_Param{-1};
-DmgMap m_compareMask;
-QImage m_PicToFix;
-
+    DmgMap m_compareMask;
 
 public:
 
 AverageFilter() = delete;
-AverageFilter(DmgMap const &i_dmpmap,QImage i_image);
-AverageFilter(DmgMap const &i_dmpmap,short *** i_mask,size_t i_width,size_t i_height);
-AverageFilter(DmgMap const &i_dmpmap, baseFilter const &i_baseFilter);
-~AverageFilter();
+AverageFilter(DmgMap const &i_dmpmap, const QImage& i_image);
 
-AverageFilter& operator=(const AverageFilter& i_src);
-AverageFilter& operator=(AverageFilter&& i_src);
-
-void setObjectToFix(QImage i_Image) { m_PicToFix = i_Image; }
-void setMap(DmgMap &i_compareM) {m_compareMask = i_compareM; }
-void setParameters(vector<double> iParameters) override {if((iParameters.size()==1 && iParameters.at(0)==1.0) || iParameters.at(0)==0.0) m_Param=iParameters.at(0);}
-QImage getFixedPicture() const {return m_PicToFix;}
-
+void setObjectToFix(QImage i_Image) { takePicture(i_Image); }
+void setMap(DmgMap &i_compareM) { m_compareMask = i_compareM; }
+void setParameters(const vector<double>& iParameters) override;
+void getFixedPicture(QImage& pic) const;
 
 virtual void Correction() override;
 

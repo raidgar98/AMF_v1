@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.5
+** Created by: Qt User Interface Compiler version 5.12.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,14 +12,16 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpinBox>
-#include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,39 +30,49 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralwidget;
-    QPushButton *BtnLoad;
-    QPushButton *btnDamage;
-    QPushButton *btnFix;
-    QLabel *LblSource;
-    QLabel *LblDamaged;
-    QLabel *LblFixed;
-    QSlider *SpinerDamSize;
-    QSlider *SliderDamNum;
-    QSpinBox *SpinDamSize;
-    QSpinBox *SpinDamNum;
+    QGridLayout *gridLayout_2;
+    QFrame *menu;
+    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout_5;
+    QVBoxLayout *verticalLayout_4;
     QLabel *label;
+    QFormLayout *formLayout_2;
+    QSpinBox *SpinDamSize;
+    QSlider *SpinerDamSize;
     QLabel *label_2;
-    QLabel *LblMap;
-    QRadioButton *AverageRBtn;
+    QFormLayout *formLayout;
+    QSpinBox *SpinDamNum;
+    QSlider *SliderDamNum;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *DamageLbl;
     QLabel *label_3;
+    QRadioButton *AverageRBtn;
+    QVBoxLayout *verticalLayout;
+    QLabel *label_4;
     QCheckBox *DestroyedCBox;
     QCheckBox *MapCBox;
     QCheckBox *FixedCBox;
-    QLabel *label_4;
+    QVBoxLayout *verticalLayout_2;
+    QPushButton *BtnLoad;
+    QPushButton *btnDamage;
+    QPushButton *btnFix;
     QPushButton *btnSave;
-    QLabel *label_5;
-    QLabel *label_6;
+    QFrame *frame_2;
+    QGridLayout *gridLayout;
+    QLabel *LblSource;
+    QLabel *LblDamaged;
     QLabel *label_7;
+    QLabel *LblFixed;
+    QLabel *label_5;
+    QLabel *LblMap;
+    QLabel *label_6;
     QLabel *label_8;
-    QLabel *DamageLbl;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1554, 929);
+        MainWindow->resize(1005, 527);
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -135,9 +147,36 @@ public:
         MainWindow->setPalette(palette);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        BtnLoad = new QPushButton(centralwidget);
-        BtnLoad->setObjectName(QString::fromUtf8("BtnLoad"));
-        BtnLoad->setGeometry(QRect(1290, 510, 200, 70));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(centralwidget->sizePolicy().hasHeightForWidth());
+        centralwidget->setSizePolicy(sizePolicy);
+        gridLayout_2 = new QGridLayout(centralwidget);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        menu = new QFrame(centralwidget);
+        menu->setObjectName(QString::fromUtf8("menu"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(1);
+        sizePolicy1.setVerticalStretch(1);
+        sizePolicy1.setHeightForWidth(menu->sizePolicy().hasHeightForWidth());
+        menu->setSizePolicy(sizePolicy1);
+        menu->setFrameShape(QFrame::StyledPanel);
+        menu->setFrameShadow(QFrame::Raised);
+        menu->setLineWidth(0);
+        verticalLayout_6 = new QVBoxLayout(menu);
+        verticalLayout_6->setSpacing(0);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        verticalLayout_6->setSizeConstraint(QLayout::SetMinimumSize);
+        verticalLayout_6->setContentsMargins(0, 0, 0, 0);
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setSpacing(0);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(0);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        label = new QLabel(menu);
+        label->setObjectName(QString::fromUtf8("label"));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
         QBrush brush8(QColor(162, 158, 157, 255));
@@ -205,10 +244,20 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette1.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        BtnLoad->setPalette(palette1);
-        btnDamage = new QPushButton(centralwidget);
-        btnDamage->setObjectName(QString::fromUtf8("btnDamage"));
-        btnDamage->setGeometry(QRect(1290, 590, 200, 70));
+        label->setPalette(palette1);
+
+        verticalLayout_4->addWidget(label);
+
+        formLayout_2 = new QFormLayout();
+        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setLabelAlignment(Qt::AlignCenter);
+        formLayout_2->setFormAlignment(Qt::AlignCenter);
+        formLayout_2->setHorizontalSpacing(20);
+        formLayout_2->setVerticalSpacing(0);
+        formLayout_2->setContentsMargins(5, 1, 5, 1);
+        SpinDamSize = new QSpinBox(menu);
+        SpinDamSize->setObjectName(QString::fromUtf8("SpinDamSize"));
+        SpinDamSize->setMinimumSize(QSize(75, 0));
         QPalette palette2;
         palette2.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette2.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -264,10 +313,14 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette2.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        btnDamage->setPalette(palette2);
-        btnFix = new QPushButton(centralwidget);
-        btnFix->setObjectName(QString::fromUtf8("btnFix"));
-        btnFix->setGeometry(QRect(1290, 670, 200, 70));
+        SpinDamSize->setPalette(palette2);
+        SpinDamSize->setMaximum(100);
+
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, SpinDamSize);
+
+        SpinerDamSize = new QSlider(menu);
+        SpinerDamSize->setObjectName(QString::fromUtf8("SpinerDamSize"));
+        SpinerDamSize->setMinimumSize(QSize(200, 0));
         QPalette palette3;
         palette3.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette3.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -323,10 +376,17 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette3.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        btnFix->setPalette(palette3);
-        LblSource = new QLabel(centralwidget);
-        LblSource->setObjectName(QString::fromUtf8("LblSource"));
-        LblSource->setGeometry(QRect(10, 40, 600, 400));
+        SpinerDamSize->setPalette(palette3);
+        SpinerDamSize->setMaximum(100);
+        SpinerDamSize->setOrientation(Qt::Horizontal);
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, SpinerDamSize);
+
+
+        verticalLayout_4->addLayout(formLayout_2);
+
+        label_2 = new QLabel(menu);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
         QPalette palette4;
         palette4.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette4.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -382,13 +442,20 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette4.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        LblSource->setPalette(palette4);
-        LblSource->setAutoFillBackground(true);
-        LblSource->setFrameShape(QFrame::NoFrame);
-        LblSource->setAlignment(Qt::AlignCenter);
-        LblDamaged = new QLabel(centralwidget);
-        LblDamaged->setObjectName(QString::fromUtf8("LblDamaged"));
-        LblDamaged->setGeometry(QRect(10, 470, 600, 400));
+        label_2->setPalette(palette4);
+
+        verticalLayout_4->addWidget(label_2);
+
+        formLayout = new QFormLayout();
+        formLayout->setObjectName(QString::fromUtf8("formLayout"));
+        formLayout->setLabelAlignment(Qt::AlignCenter);
+        formLayout->setFormAlignment(Qt::AlignCenter);
+        formLayout->setHorizontalSpacing(20);
+        formLayout->setVerticalSpacing(0);
+        formLayout->setContentsMargins(5, 1, 5, 1);
+        SpinDamNum = new QSpinBox(menu);
+        SpinDamNum->setObjectName(QString::fromUtf8("SpinDamNum"));
+        SpinDamNum->setMinimumSize(QSize(75, 0));
         QPalette palette5;
         palette5.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette5.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -444,14 +511,14 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette5.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        LblDamaged->setPalette(palette5);
-        LblDamaged->setAutoFillBackground(true);
-        LblDamaged->setFrameShape(QFrame::NoFrame);
-        LblDamaged->setAlignment(Qt::AlignCenter);
-        LblDamaged->setWordWrap(true);
-        LblFixed = new QLabel(centralwidget);
-        LblFixed->setObjectName(QString::fromUtf8("LblFixed"));
-        LblFixed->setGeometry(QRect(630, 470, 600, 400));
+        SpinDamNum->setPalette(palette5);
+        SpinDamNum->setMaximum(10000);
+
+        formLayout->setWidget(0, QFormLayout::LabelRole, SpinDamNum);
+
+        SliderDamNum = new QSlider(menu);
+        SliderDamNum->setObjectName(QString::fromUtf8("SliderDamNum"));
+        SliderDamNum->setMinimumSize(QSize(200, 0));
         QPalette palette6;
         palette6.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette6.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -507,13 +574,29 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette6.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        LblFixed->setPalette(palette6);
-        LblFixed->setAutoFillBackground(true);
-        LblFixed->setFrameShape(QFrame::NoFrame);
-        LblFixed->setAlignment(Qt::AlignCenter);
-        SpinerDamSize = new QSlider(centralwidget);
-        SpinerDamSize->setObjectName(QString::fromUtf8("SpinerDamSize"));
-        SpinerDamSize->setGeometry(QRect(1280, 50, 160, 22));
+        SliderDamNum->setPalette(palette6);
+        SliderDamNum->setMaximum(10000);
+        SliderDamNum->setOrientation(Qt::Horizontal);
+
+        formLayout->setWidget(0, QFormLayout::FieldRole, SliderDamNum);
+
+
+        verticalLayout_4->addLayout(formLayout);
+
+
+        verticalLayout_5->addLayout(verticalLayout_4);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(0);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        DamageLbl = new QLabel(menu);
+        DamageLbl->setObjectName(QString::fromUtf8("DamageLbl"));
+        DamageLbl->setToolTipDuration(3);
+
+        verticalLayout_3->addWidget(DamageLbl);
+
+        label_3 = new QLabel(menu);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
         QPalette palette7;
         palette7.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette7.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -569,12 +652,12 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette7.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        SpinerDamSize->setPalette(palette7);
-        SpinerDamSize->setMaximum(100);
-        SpinerDamSize->setOrientation(Qt::Horizontal);
-        SliderDamNum = new QSlider(centralwidget);
-        SliderDamNum->setObjectName(QString::fromUtf8("SliderDamNum"));
-        SliderDamNum->setGeometry(QRect(1280, 130, 160, 22));
+        label_3->setPalette(palette7);
+
+        verticalLayout_3->addWidget(label_3);
+
+        AverageRBtn = new QRadioButton(menu);
+        AverageRBtn->setObjectName(QString::fromUtf8("AverageRBtn"));
         QPalette palette8;
         palette8.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette8.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -630,12 +713,18 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette8.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        SliderDamNum->setPalette(palette8);
-        SliderDamNum->setMaximum(10000);
-        SliderDamNum->setOrientation(Qt::Horizontal);
-        SpinDamSize = new QSpinBox(centralwidget);
-        SpinDamSize->setObjectName(QString::fromUtf8("SpinDamSize"));
-        SpinDamSize->setGeometry(QRect(1460, 50, 61, 22));
+        AverageRBtn->setPalette(palette8);
+
+        verticalLayout_3->addWidget(AverageRBtn);
+
+
+        verticalLayout_5->addLayout(verticalLayout_3);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(0);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        label_4 = new QLabel(menu);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
         QPalette palette9;
         palette9.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette9.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -691,11 +780,12 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette9.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        SpinDamSize->setPalette(palette9);
-        SpinDamSize->setMaximum(100);
-        SpinDamNum = new QSpinBox(centralwidget);
-        SpinDamNum->setObjectName(QString::fromUtf8("SpinDamNum"));
-        SpinDamNum->setGeometry(QRect(1460, 130, 61, 22));
+        label_4->setPalette(palette9);
+
+        verticalLayout->addWidget(label_4);
+
+        DestroyedCBox = new QCheckBox(menu);
+        DestroyedCBox->setObjectName(QString::fromUtf8("DestroyedCBox"));
         QPalette palette10;
         palette10.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette10.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -751,11 +841,12 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette10.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        SpinDamNum->setPalette(palette10);
-        SpinDamNum->setMaximum(10000);
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(1280, 20, 81, 16));
+        DestroyedCBox->setPalette(palette10);
+
+        verticalLayout->addWidget(DestroyedCBox);
+
+        MapCBox = new QCheckBox(menu);
+        MapCBox->setObjectName(QString::fromUtf8("MapCBox"));
         QPalette palette11;
         palette11.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette11.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -811,10 +902,12 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette11.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label->setPalette(palette11);
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(1280, 110, 91, 16));
+        MapCBox->setPalette(palette11);
+
+        verticalLayout->addWidget(MapCBox);
+
+        FixedCBox = new QCheckBox(menu);
+        FixedCBox->setObjectName(QString::fromUtf8("FixedCBox"));
         QPalette palette12;
         palette12.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette12.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -870,10 +963,23 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette12.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_2->setPalette(palette12);
-        LblMap = new QLabel(centralwidget);
-        LblMap->setObjectName(QString::fromUtf8("LblMap"));
-        LblMap->setGeometry(QRect(630, 40, 600, 400));
+        FixedCBox->setPalette(palette12);
+
+        verticalLayout->addWidget(FixedCBox);
+
+
+        verticalLayout_5->addLayout(verticalLayout);
+
+
+        verticalLayout_6->addLayout(verticalLayout_5);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(0);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setSizeConstraint(QLayout::SetMinimumSize);
+        BtnLoad = new QPushButton(menu);
+        BtnLoad->setObjectName(QString::fromUtf8("BtnLoad"));
+        BtnLoad->setMinimumSize(QSize(150, 40));
         QPalette palette13;
         palette13.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette13.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -929,13 +1035,13 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette13.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        LblMap->setPalette(palette13);
-        LblMap->setAutoFillBackground(true);
-        LblMap->setFrameShape(QFrame::NoFrame);
-        LblMap->setAlignment(Qt::AlignCenter);
-        AverageRBtn = new QRadioButton(centralwidget);
-        AverageRBtn->setObjectName(QString::fromUtf8("AverageRBtn"));
-        AverageRBtn->setGeometry(QRect(1290, 240, 161, 22));
+        BtnLoad->setPalette(palette13);
+
+        verticalLayout_2->addWidget(BtnLoad);
+
+        btnDamage = new QPushButton(menu);
+        btnDamage->setObjectName(QString::fromUtf8("btnDamage"));
+        btnDamage->setMinimumSize(QSize(150, 40));
         QPalette palette14;
         palette14.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette14.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -991,10 +1097,13 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette14.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        AverageRBtn->setPalette(palette14);
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(1290, 210, 101, 16));
+        btnDamage->setPalette(palette14);
+
+        verticalLayout_2->addWidget(btnDamage);
+
+        btnFix = new QPushButton(menu);
+        btnFix->setObjectName(QString::fromUtf8("btnFix"));
+        btnFix->setMinimumSize(QSize(150, 40));
         QPalette palette15;
         palette15.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette15.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1050,10 +1159,13 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette15.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_3->setPalette(palette15);
-        DestroyedCBox = new QCheckBox(centralwidget);
-        DestroyedCBox->setObjectName(QString::fromUtf8("DestroyedCBox"));
-        DestroyedCBox->setGeometry(QRect(1280, 350, 161, 22));
+        btnFix->setPalette(palette15);
+
+        verticalLayout_2->addWidget(btnFix);
+
+        btnSave = new QPushButton(menu);
+        btnSave->setObjectName(QString::fromUtf8("btnSave"));
+        btnSave->setMinimumSize(QSize(150, 40));
         QPalette palette16;
         palette16.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette16.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1109,10 +1221,34 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette16.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        DestroyedCBox->setPalette(palette16);
-        MapCBox = new QCheckBox(centralwidget);
-        MapCBox->setObjectName(QString::fromUtf8("MapCBox"));
-        MapCBox->setGeometry(QRect(1280, 380, 161, 22));
+        btnSave->setPalette(palette16);
+
+        verticalLayout_2->addWidget(btnSave);
+
+
+        verticalLayout_6->addLayout(verticalLayout_2);
+
+
+        gridLayout_2->addWidget(menu, 0, 0, 1, 1);
+
+        frame_2 = new QFrame(centralwidget);
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy2.setHorizontalStretch(2);
+        sizePolicy2.setVerticalStretch(2);
+        sizePolicy2.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
+        frame_2->setSizePolicy(sizePolicy2);
+        frame_2->setFrameShape(QFrame::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Raised);
+        frame_2->setLineWidth(0);
+        gridLayout = new QGridLayout(frame_2);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setHorizontalSpacing(10);
+        gridLayout->setVerticalSpacing(1);
+        gridLayout->setContentsMargins(0, 0, 0, 0);
+        LblSource = new QLabel(frame_2);
+        LblSource->setObjectName(QString::fromUtf8("LblSource"));
+        LblSource->setMinimumSize(QSize(300, 200));
         QPalette palette17;
         palette17.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette17.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1168,10 +1304,16 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette17.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        MapCBox->setPalette(palette17);
-        FixedCBox = new QCheckBox(centralwidget);
-        FixedCBox->setObjectName(QString::fromUtf8("FixedCBox"));
-        FixedCBox->setGeometry(QRect(1280, 410, 171, 22));
+        LblSource->setPalette(palette17);
+        LblSource->setAutoFillBackground(true);
+        LblSource->setFrameShape(QFrame::NoFrame);
+        LblSource->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(LblSource, 1, 0, 1, 1);
+
+        LblDamaged = new QLabel(frame_2);
+        LblDamaged->setObjectName(QString::fromUtf8("LblDamaged"));
+        LblDamaged->setMinimumSize(QSize(300, 200));
         QPalette palette18;
         palette18.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette18.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1227,10 +1369,18 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette18.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        FixedCBox->setPalette(palette18);
-        label_4 = new QLabel(centralwidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(1290, 330, 55, 16));
+        LblDamaged->setPalette(palette18);
+        LblDamaged->setAutoFillBackground(true);
+        LblDamaged->setFrameShape(QFrame::NoFrame);
+        LblDamaged->setAlignment(Qt::AlignCenter);
+        LblDamaged->setWordWrap(true);
+
+        gridLayout->addWidget(LblDamaged, 3, 0, 1, 1);
+
+        label_7 = new QLabel(frame_2);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setMinimumSize(QSize(0, 0));
+        label_7->setMaximumSize(QSize(16777215, 25));
         QPalette palette19;
         palette19.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette19.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1286,10 +1436,13 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette19.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_4->setPalette(palette19);
-        btnSave = new QPushButton(centralwidget);
-        btnSave->setObjectName(QString::fromUtf8("btnSave"));
-        btnSave->setGeometry(QRect(1290, 750, 200, 70));
+        label_7->setPalette(palette19);
+
+        gridLayout->addWidget(label_7, 2, 1, 1, 1);
+
+        LblFixed = new QLabel(frame_2);
+        LblFixed->setObjectName(QString::fromUtf8("LblFixed"));
+        LblFixed->setMinimumSize(QSize(300, 200));
         QPalette palette20;
         palette20.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette20.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1345,10 +1498,17 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette20.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        btnSave->setPalette(palette20);
-        label_5 = new QLabel(centralwidget);
+        LblFixed->setPalette(palette20);
+        LblFixed->setAutoFillBackground(true);
+        LblFixed->setFrameShape(QFrame::NoFrame);
+        LblFixed->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(LblFixed, 3, 1, 1, 1);
+
+        label_5 = new QLabel(frame_2);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(10, 20, 181, 16));
+        label_5->setMinimumSize(QSize(0, 0));
+        label_5->setMaximumSize(QSize(16777215, 25));
         QPalette palette21;
         palette21.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette21.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1405,9 +1565,12 @@ public:
         palette21.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
         label_5->setPalette(palette21);
-        label_6 = new QLabel(centralwidget);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(10, 450, 181, 16));
+
+        gridLayout->addWidget(label_5, 0, 0, 1, 1);
+
+        LblMap = new QLabel(frame_2);
+        LblMap->setObjectName(QString::fromUtf8("LblMap"));
+        LblMap->setMinimumSize(QSize(300, 200));
         QPalette palette22;
         palette22.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette22.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1463,10 +1626,17 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette22.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_6->setPalette(palette22);
-        label_7 = new QLabel(centralwidget);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setGeometry(QRect(630, 450, 181, 16));
+        LblMap->setPalette(palette22);
+        LblMap->setAutoFillBackground(true);
+        LblMap->setFrameShape(QFrame::NoFrame);
+        LblMap->setAlignment(Qt::AlignCenter);
+
+        gridLayout->addWidget(LblMap, 1, 1, 1, 1);
+
+        label_6 = new QLabel(frame_2);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setMinimumSize(QSize(0, 0));
+        label_6->setMaximumSize(QSize(16777215, 25));
         QPalette palette23;
         palette23.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette23.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1522,10 +1692,14 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette23.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_7->setPalette(palette23);
-        label_8 = new QLabel(centralwidget);
+        label_6->setPalette(palette23);
+
+        gridLayout->addWidget(label_6, 2, 0, 1, 1);
+
+        label_8 = new QLabel(frame_2);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(630, 20, 181, 16));
+        label_8->setMinimumSize(QSize(0, 0));
+        label_8->setMaximumSize(QSize(16777215, 25));
         QPalette palette24;
         palette24.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette24.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1582,24 +1756,19 @@ public:
         palette24.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
         label_8->setPalette(palette24);
-        DamageLbl = new QLabel(centralwidget);
-        DamageLbl->setObjectName(QString::fromUtf8("DamageLbl"));
-        DamageLbl->setGeometry(QRect(1290, 170, 231, 16));
-        DamageLbl->setToolTipDuration(3);
+
+        gridLayout->addWidget(label_8, 0, 1, 1, 1);
+
+
+        gridLayout_2->addWidget(frame_2, 0, 1, 1, 1);
+
         MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1554, 25));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
+        QObject::connect(SpinDamNum, SIGNAL(valueChanged(int)), SliderDamNum, SLOT(setValue(int)));
         QObject::connect(SpinerDamSize, SIGNAL(valueChanged(int)), SpinerDamSize, SLOT(setValue(int)));
         QObject::connect(SpinerDamSize, SIGNAL(valueChanged(int)), SpinDamSize, SLOT(setValue(int)));
         QObject::connect(SliderDamNum, SIGNAL(valueChanged(int)), SpinDamNum, SLOT(setValue(int)));
-        QObject::connect(SpinDamNum, SIGNAL(valueChanged(int)), SliderDamNum, SLOT(setValue(int)));
         QObject::connect(SpinDamSize, SIGNAL(valueChanged(int)), SpinerDamSize, SLOT(setValue(int)));
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1608,27 +1777,27 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        BtnLoad->setText(QApplication::translate("MainWindow", "Load", nullptr));
-        btnDamage->setText(QApplication::translate("MainWindow", "Damage", nullptr));
-        btnFix->setText(QApplication::translate("MainWindow", "Fix", nullptr));
-        LblSource->setText(QString());
-        LblDamaged->setText(QString());
-        LblFixed->setText(QString());
         label->setText(QApplication::translate("MainWindow", "Damages Size", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Num of Damage", nullptr));
-        LblMap->setText(QString());
-        AverageRBtn->setText(QApplication::translate("MainWindow", "Average Filter", nullptr));
+        DamageLbl->setText(QApplication::translate("MainWindow", "TextLabel", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Select Filter", nullptr));
+        AverageRBtn->setText(QApplication::translate("MainWindow", "Average Filter", nullptr));
+        label_4->setText(QApplication::translate("MainWindow", "Save", nullptr));
         DestroyedCBox->setText(QApplication::translate("MainWindow", "Destroyed Image", nullptr));
         MapCBox->setText(QApplication::translate("MainWindow", "Map Image", nullptr));
         FixedCBox->setText(QApplication::translate("MainWindow", "Fixed Image", nullptr));
-        label_4->setText(QApplication::translate("MainWindow", "Save", nullptr));
+        BtnLoad->setText(QApplication::translate("MainWindow", "Load", nullptr));
+        btnDamage->setText(QApplication::translate("MainWindow", "Damage", nullptr));
+        btnFix->setText(QApplication::translate("MainWindow", "Fix", nullptr));
         btnSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
-        label_5->setText(QApplication::translate("MainWindow", "Source Image", nullptr));
-        label_6->setText(QApplication::translate("MainWindow", "Destroyed Image", nullptr));
+        LblSource->setText(QString());
+        LblDamaged->setText(QString());
         label_7->setText(QApplication::translate("MainWindow", "Fixed Image", nullptr));
+        LblFixed->setText(QString());
+        label_5->setText(QApplication::translate("MainWindow", "Source Image", nullptr));
+        LblMap->setText(QString());
+        label_6->setText(QApplication::translate("MainWindow", "Destroyed Image", nullptr));
         label_8->setText(QApplication::translate("MainWindow", "Map Image", nullptr));
-        DamageLbl->setText(QApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };

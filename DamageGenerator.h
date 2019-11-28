@@ -2,6 +2,7 @@
 #include<random>
 #include<ctime>
 #include<math.h>
+#include <QImage>
 //#include"damageKind.h"
 using namespace std;
 
@@ -23,7 +24,7 @@ public:
     DamageGenerator();
     ~DamageGenerator();
 
-    static void makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, size_t iDamageCenterNumber, size_t iPixelDamageNumber);
+    static void makeDamage(const QImage& src, QImage& dst, size_t iDamageStartNumber, int iPixelDamageNumber);
     static void setKindOfDamage(damageDistansKind iKindOfDamage) { kindOfDamage = iKindOfDamage; }
 };
 

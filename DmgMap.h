@@ -8,13 +8,13 @@ private:
     using coord = std::pair<unsigned int,unsigned int >;
     enum Color
     {
-
         R=0,
         G=1,
         B=2
-
     };
+
 protected:
+
     QImage m_raw;
     QImage m_dmg;
     QImage m_map;
@@ -25,8 +25,6 @@ protected:
     unsigned int m_2Dheight;
 
     void release2Dtab() ;
-
-
 
 public:
     DmgMap()=default;
@@ -51,7 +49,7 @@ public:
     void setDamagedPixel(size_t i_x,size_t i_y);
     QImage getRaw() const { return m_raw; }
     QImage getDmg() const { return m_dmg; }
-    QImage getMap() const { return m_map; }
+    const QImage& getMap() const { return m_map; }
 
     coord getSize() {return coord(m_2Dwidth,m_2Dheight);}
 

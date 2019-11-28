@@ -24,8 +24,8 @@ public:
 
         chr * __m_data = nullptr;
 
-        const idx __m_width;
-        const idx __m_height;
+        idx __m_width;
+        idx __m_height;
 
 public:
 
@@ -60,6 +60,8 @@ public:
             bool operator!=(const pixel& src) const { return !this->operator==(src); }
             operator QString() const noexcept;
             operator bool() const { return !isNull(); }
+
+            void operator=(const QRgb&);
 
             bool isNull() const { return d_ptr == nullptr; }
 
@@ -119,6 +121,8 @@ public:
         Izimage(Izimage&&);
         ~Izimage();
         explicit Izimage(const QImage&);
+        Izimage& operator=(const QImage&);
+
         pixel operator()(const idx x, const idx y) const;
 
         px_square get_square(const pixel& central) const { return px_square(); }
@@ -131,7 +135,8 @@ public:
 
         void render(QImage& dst) const;
 
-//private:
+        bool isNull() const noexcept { return __m_data == nullptr; }
+
         idx translate(const idx x, const idx y) const;
         idx translate(const coord& xy) const;
         coord translate(const idx) const;

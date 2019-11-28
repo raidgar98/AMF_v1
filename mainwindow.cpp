@@ -6,6 +6,8 @@
 #include "QImage"
 #include <QMessageBox>
 
+#include "AverageFilter.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -44,30 +46,34 @@ void MainWindow::on_BtnLoad_clicked()
 
 }
 
+#define cout qDebug()
+
 void MainWindow::on_btnDamage_clicked() //dodac ograniczenie, jesli do zniszczenia więcej niż 100% obrazu
 {
-   if(SrcImage.isNull())
-   {
-       QMessageBox msg(QMessageBox::Icon::NoIcon, "Warning", "Load the source image");
-       msg.exec();
-   }
-   else
+    if(SrcImage.isNull())
     {
-    int SizeOfDamage=ui->SpinDamSize->value();
-    int NumOfDamages=ui->SpinDamNum->value();
+        QMessageBox msg(QMessageBox::Icon::NoIcon, "Warning", "Load the source image");
+        msg.exec();
+    }
+    else
+    {
+        int SizeOfDamage=ui->SpinDamSize->value();
+        int NumOfDamages=ui->SpinDamNum->value();
 
-  DamageGenerator::makeDamage(nullptr,nullptr,nullptr,(size_t)(SrcImage).width(),(size_t)(SrcImage).height(),(size_t)NumOfDamages,(size_t)SizeOfDamage);
+        DamagedImage = SrcImage;
 
-  ui->LblFixed->clear();
-  ui->LblDamaged->clear();
-  DamageKasia damKasia(SrcImage);
-  DamagedImage=damKasia.spoil(SizeOfDamage, NumOfDamages);
-  ui->LblDamaged->setPixmap(QPixmap::fromImage((damKasia.spoil(SizeOfDamage, NumOfDamages).scaled(ui->LblDamaged->width(),ui->LblDamaged->height(),Qt::KeepAspectRatio))));
+        DamageGenerator::makeDamage(SrcImage, DamagedImage, NumOfDamages, SizeOfDamage);
 
-  DmgMap map(SrcImage, DamagedImage);
-  Map=map.getMap();
-  ui->LblMap->setPixmap(QPixmap::fromImage(Map.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
-}
+        ui->LblFixed->clear();
+        ui->LblDamaged->clear();
+
+        map.reset(new DmgMap(SrcImage, DamagedImage));
+        map->makeMapImages();
+        Map=map->getMap();
+
+        ui->LblMap->setPixmap(QPixmap::fromImage(Map.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
+        ui->LblDamaged->setPixmap(QPixmap::fromImage(DamagedImage.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
+    }
 
 }
 
@@ -83,8 +89,10 @@ void MainWindow::on_btnFix_clicked()
     {
         if(ui->AverageRBtn->isChecked())
         {
-            filter_average av(DamagedImage);
-            FixedImage=av.fix();
+            AverageFilter av(*map, map->getDmg());
+            av.Correction();
+            av.getFixedPicture(FixedImage);
+
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
         }
         else

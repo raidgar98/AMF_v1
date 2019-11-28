@@ -1,26 +1,57 @@
 #pragma once
+
 #include<vector>
+#include "imageconverter.h"
+
 using namespace std;
 
+template<typename T>
+using array_pointer_member = std::shared_ptr<T[]>;
+
+template<typename T>
+using array_pointer = std::shared_ptr<array_pointer_member<T>[]>;
+
+/// @brief klasa bazowa dla przyszłych filtrów
+/// @note w klasach pochodnych trzeba dodać gettery do dodanych parametrów
+/// @note parametry potrzebne konkretnemu filtrowi trzeba dopisać w klasach dziedziczących
 class baseFilter
 {
 protected:
-    //parametry potrzebne konkretnemu filtrowi trzeba dopisać w klasach dziedziczących
-    uint32_t ** fixedPixelMap = nullptr; //mapa naprawionych pixeli
-    short*** picture = nullptr; //wskaźnik do obrazu
-    //wymiary obrazka
-    uint32_t pictureHeight=0;
-    uint32_t pictureLeght=0;
+
+    /// @variable mapa naprawionych pixeli
+    /// @note później wymagana zmiana na tablice rzadką
+    array_pointer<bool> fixedPixelMap;
+
+    /// @variable kontener zniszczonego obrazu
+    Izimage picture;
 
 public:
-    baseFilter();
-    ~baseFilter();
-    virtual void setParameters(vector<double> iParameters) =0;//ustawianie parametrów jest za pomocą wektora, w klasach pochodnych trzeba zdefiniować, która z jego składowych będzie wypełniała dany parametr
-    //w klasach pochodnych trzeba dodać gettery do dodanych parametrów
-    void setFixedPixel(int xPixel, int yPixel) ; //zaznacza na mapie naprawione pixele
-    uint32_t** getFixedPixel() const {return fixedPixelMap;} //zwraca wskaźnik do mapy z naprawionymi pixelami
 
-    void takePicture(short ***tabRGB, uint32_t iHeight, uint32_t iLenght);  //pobiera obrazek do naprawy
-    short *** returnFixedPicture() const { return picture; } //zwraca przyjęty obraz
-    virtual void Correction()=0; //miejsce na algorytm naprawiający obraz
+    /// @brief wirtualny destruktor
+    explicit baseFilter(const QImage& src);
+    virtual ~baseFilter() = default;
+
+    /// @brief ustawianie parametrów jest za pomocą wektora, w klasach pochodnych trzeba zdefiniować, która z jego składowych będzie wypełniała dany parametr
+    /// @param iParameters - zadane parametry
+    virtual void setParameters(const vector<double>& iParameters) = 0;
+
+    /// @brief zaznacza na mapie naprawione pixele
+    /// @param xPixel, yPixel - współżędne
+    void setFixedPixel(const size_t xPixel, const size_t yPixel, const bool state);
+
+    /// @brief zwraca wskaźnik do mapy z naprawionymi pixelami
+    /// @returns wskaźnik na tablicę naprawionych pikseli
+    const array_pointer<bool>& getFixedPixel() const { return fixedPixelMap; }
+
+    /// @brief pobiera obrazek do naprawy
+    /// @param tabRGB - wskaźnik na tablicę pixeli (RGB)
+    /// @param iHeight, iLength - wymiary obrazka
+    void takePicture(const QImage& src);
+
+    /// @brief zwraca przyjęty obraz
+    /// @returns wskaźnik na obraz
+    const Izimage& returnFixedPicture() const { return picture; }
+
+    /// @brief miejsce na algorytm naprawiający obraz
+    virtual void Correction() = 0;
 };

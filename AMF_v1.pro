@@ -29,7 +29,7 @@ SOURCES += \
         DamageGenerator.cpp \
         DmgMap.cpp \
         baseFilter.cpp \
-        damagekasia.cpp \
+#        damagekasia.cpp \
         filter_average.cpp \
         imageconverter.cpp \
         main.cpp \
@@ -40,7 +40,7 @@ HEADERS += \
         DamageGenerator.h \
         DmgMap.h \
         baseFilter.h \
-        damagekasia.h \
+#        damagekasia.h \
         filter_average.h \
         imageconverter.h \
         mainwindow.h

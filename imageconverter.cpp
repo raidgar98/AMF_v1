@@ -50,6 +50,27 @@ Izimage::Izimage(const QImage & src)
     }
 }
 
+Izimage &Izimage::operator=(const QImage & src)
+{
+    __m_width = static_cast<idx>(src.width());
+    __m_height = static_cast<idx>(src.height());
+
+    const idx max = static_cast<idx>(__m_width * __m_height);
+    __m_data = new chr[((max + 1) * sizeof(pixel::cast_struct))];
+    memcpy(
+                reinterpret_cast<void*>(__m_data),
+                reinterpret_cast<const void*>(src.bits()),
+                max * sizeof(pixel::cast_struct)
+            );
+
+    //Create delimiter
+    for(chr * it = &__m_data[max * sizeof(pixel::cast_struct)]; ;it++)
+    {
+        *it = 0;
+        if(it == &__m_data[((max + 1) * sizeof(pixel::cast_struct)) - 1]) break;
+    }
+}
+
 Izimage::pixel Izimage::operator()(const Izimage::idx x, const Izimage::idx y) const
 {
     const idx i = translate(x, y);
@@ -93,6 +114,13 @@ bool Izimage::pixel::operator==(const Izimage::pixel &src) const
         return src.d_ptr == d_ptr;
     else
         return R() == src.R() && G() == src.G() && B() == src.B();
+}
+
+void Izimage::pixel::operator=(const QRgb & rgb)
+{
+    R(qRed(rgb));
+    G(qGreen(rgb));
+    B(qBlue(rgb));
 }
 
 Izimage::pixel::operator QString() const noexcept

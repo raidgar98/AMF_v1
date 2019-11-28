@@ -120,16 +120,16 @@ DmgMap::~DmgMap()
     release2Dtab();
 }
 
+#define cout qDebug()
+
 void DmgMap::makeMapImages()
 {
     if(!m_raw.isNull() && !m_dmg.isNull()  && m_raw.width()==m_dmg.width() && m_raw.height()==m_dmg.height())
         {
-
-
             int m_imageWidth=m_raw.width();
             int m_imageHeight=m_raw.height();
-            //m_map=m_raw;
             m_map=QImage(m_imageWidth,m_imageHeight,QImage::Format_RGB32);
+
             for (int i=0;i<m_imageWidth;i++)
             {
                 for (int  j=0;j<m_imageHeight;j++)

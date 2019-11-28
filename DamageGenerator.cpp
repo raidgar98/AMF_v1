@@ -26,72 +26,30 @@ DamageGenerator::~DamageGenerator()
 
 
 
-void DamageGenerator::makeDamage(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, size_t iDamageStartNumber, size_t iPixelDamageNumber)
+void DamageGenerator::makeDamage(const QImage& src, QImage& dst, size_t iDamageStartNumber, int iPixelDamageNumber)
 {
-    if (iTabR!=nullptr && iTabG != nullptr && iTabB != nullptr && iSizeX>0 && iSizeY>0)
+    random_device randomGenerator;
+    int xCenter;
+    int yCenter;
+    int xAktual;
+    int yAktual;
+    uniform_int_distribution<int> uIntDistX(0, src.width());
+    uniform_int_distribution<int> uIntDistY(0, src.height());
+
+    for (size_t i = 0; i < iDamageStartNumber; i++)
     {
-        random_device randomGenerator;
-        int xCenter;
-        int yCenter;
-        int xAktual;
-        int yAktual;
-        uniform_int_distribution<int> uIntDistX(0, iSizeX);
-        uniform_int_distribution<int> uIntDistY(0, iSizeY);
+        xCenter = uIntDistX(randomGenerator);
+        yCenter = uIntDistY(randomGenerator);
 
-        for (size_t i = 0; i < iDamageStartNumber; i++)
-        {
-            xCenter = uIntDistX(randomGenerator);
-            yCenter = uIntDistY(randomGenerator);
-            switch (kindOfDamage)
+        for(int j = -1 * (iPixelDamageNumber); j <= iPixelDamageNumber; j++)
+            for(int k = -1 * (iPixelDamageNumber); k <= iPixelDamageNumber; k++)
             {
-            default:
-            case damageDistansKind::euclidean:
-                for (size_t pixelNumber = 0; pixelNumber < iPixelDamageNumber; pixelNumber++)
-                {
+                xAktual = xCenter + j;
+                yAktual = yCenter + k;
+                if(xAktual < 0 || yAktual < 0) continue;
+                if(xAktual >= src.width() || yAktual >= src.height()) continue;
 
-                    xAktual = xCenter - (int)sqrt(iPixelDamageNumber) / 2 + pixelNumber % (int)sqrt(iPixelDamageNumber);
-                    yAktual = yCenter - (int)sqrt(iPixelDamageNumber) / 2 + pixelNumber / (int)sqrt(iPixelDamageNumber);
-                    cout << xAktual << "\t" << yAktual << endl;
-                    rgbChanger(iTabR, iTabG, iTabB, iSizeX, iSizeY, xAktual, yAktual);
-                }
-                break;
-
-            case damageDistansKind::manhattan:
-                int cityRange = 0;
-                size_t a = 5;
-                size_t b = 4;
-                while (a <= iPixelDamageNumber)
-                {
-                    cityRange++;
-                    b += 4;
-                    a += b;
-                }
-
-                size_t pixelNumber = 0;
-                for (int i = -cityRange; i <= cityRange; i++)
-                {
-                    for (int j = -cityRange; j <= cityRange; j++)
-                    {
-                        if (abs(i) + abs(j) <= cityRange)
-                        {
-                            xAktual = xCenter + i;
-                            yAktual = yCenter + j;
-                            cout << xAktual << "\t" << yAktual << endl;
-                            rgbChanger(iTabR, iTabG, iTabB, iSizeX, iSizeY, xAktual, yAktual);
-                            if (++pixelNumber > iPixelDamageNumber)
-                            {
-                                break;
-                            }
-                        }
-
-                    }
-                    if (pixelNumber > iPixelDamageNumber)
-                    {
-                        break;
-                    }
-                }
-                break;
+                dst.setPixel(xAktual, yAktual, Qt::black);
             }
-        }
     }
 }

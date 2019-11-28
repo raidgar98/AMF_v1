@@ -1,39 +1,25 @@
-
 #include "baseFilter.h"
+#include <cstring>
 
-baseFilter::~baseFilter()
+baseFilter::baseFilter(const QImage &src)
+    :picture{ src }
 {
-    if (fixedPixelMap != nullptr)
-    {
-        delete[] fixedPixelMap[0];
-        delete[] fixedPixelMap;
-        picture = nullptr;
-    }
-};
-
-void baseFilter::setFixedPixel(int xPixel, int yPixel)
-{
-    if (fixedPixelMap != nullptr && xPixel<pictureLeght &&yPixel<pictureHeight)
-    {
-        fixedPixelMap[xPixel][yPixel] = 1;
-    }
+    fixedPixelMap.reset( new array_pointer_member<bool>[picture.width()] );
+    for(size_t i = 0; i < picture.width(); i++)
+        fixedPixelMap[i].reset( new bool[ picture.height() ] );
 }
 
-void baseFilter::takePicture(short *** tabRGB, uint32_t iHeight, uint32_t iLenght)
+void baseFilter::setFixedPixel(const size_t xPixel, const size_t yPixel, const bool state)
 {
-    picture = tabRGB;
-    if (pictureHeight<iHeight || pictureLeght<iLenght)
-    {
-        delete[] fixedPixelMap[0];
-        delete[] fixedPixelMap;
-        fixedPixelMap = new uint32_t*[iHeight];
-        fixedPixelMap[0] = new uint32_t[iHeight*iLenght];
-        for (size_t i = 1; i < iHeight; i++)
-        {
-            fixedPixelMap[i] = &fixedPixelMap[0][i*iLenght];
-        }
-    }
-    pictureHeight = iHeight;
-    pictureLeght = iLenght;
-    memset(fixedPixelMap, 0, pictureHeight*pictureLeght* sizeof(uint32_t));
-};
+    if (fixedPixelMap != nullptr && xPixel < picture.width() && yPixel < picture.height())
+        fixedPixelMap[xPixel][yPixel] = state;
+}
+
+void baseFilter::takePicture(const QImage &src)
+{
+    picture = src;
+
+    fixedPixelMap.reset( new array_pointer_member<bool>[picture.width()] );
+    for(size_t i = 0; i < picture.width(); i++)
+        fixedPixelMap[i].reset( new bool[ picture.height() ] );
+}
