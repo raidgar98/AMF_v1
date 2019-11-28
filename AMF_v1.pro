@@ -28,6 +28,7 @@ SOURCES += \
         AverageFilter.cpp \
         DamageGenerator.cpp \
         DmgMap.cpp \
+        baseFilter.cpp \
         damagekasia.cpp \
         filter_average.cpp \
         imageconverter.cpp \

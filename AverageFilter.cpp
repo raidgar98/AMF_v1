@@ -1,24 +1,60 @@
 #include "AverageFilter.h"
 
-AverageFilter::AverageFilter()
-//    :baseFilter{}
-{}
+AverageFilter::AverageFilter(DmgMap const &i_dmpmap, baseFilter const &i_baseFilter)
+{
+    picture=returnFixedPicture();
+    fixedPixelMap=i_baseFilter.getFixedPixel();
+    m_compareMask=i_dmpmap;
+    //pictureHeight=i_baseFilter.pictureHeight;
+    //pictureLeght=i_baseFilter.pictureLeght;
+}
 
 AverageFilter::AverageFilter(DmgMap const &i_dmgmap,QImage i_image)
     :m_PicToFix{i_image}
 {
     m_compareMask=i_dmgmap;
 }
-AverageFilter::AverageFilter(DmgMap const &i_dmgmap,short *** i_mask)
-    :m_MaskToFix{i_mask}
+AverageFilter::AverageFilter(DmgMap const &i_dmgmap,short *** i_mask,size_t i_width,size_t i_height)
 {
+    takePicture(i_mask,i_height,i_width);
     m_compareMask=i_dmgmap;
 }
-AverageFilter::~AverageFilter()//?
+AverageFilter& AverageFilter::operator=(const AverageFilter& i_src)
 {
     try
     {
-       if(m_MaskToFix!=nullptr)
+        m_Param=i_src.m_Param;
+        m_PicToFix=i_src.m_PicToFix;
+        m_compareMask=i_src.m_compareMask;
+        //operator kopiujace base filter
+
+    } catch (std::exception& err)
+     {
+        qInfo()<<"Error copy operator: "<<err.what();
+      }
+    return *this;
+}
+AverageFilter& AverageFilter::operator=(AverageFilter&& i_src)
+{
+    try
+    {
+        m_Param=i_src.m_Param;
+        m_PicToFix=i_src.m_PicToFix;
+        m_compareMask=i_src.m_compareMask;
+
+        i_src.~AverageFilter();
+    } catch (std::exception& err)
+     {
+        qInfo()<<"Error move operator: "<<err.what();
+      }
+    return *this;
+}
+AverageFilter::~AverageFilter()//?
+{
+    /*
+    try
+    {
+       if(picture!=nullptr)
         {
            delete[] m_MaskToFix[0];
            m_MaskToFix=nullptr;
@@ -28,13 +64,13 @@ AverageFilter::~AverageFilter()//?
     {
         qInfo()<<"Error release3Dtab constructor: "<<err.what();
     }
+    */
 }
 
 void AverageFilter::Correction()
 {
-    if(getParameters().size()==1)
-    {
-        if(getParameters().at(0)==0.0) //0.0 --> zapis w postaci zdjecia
+
+        if(m_Param==0.0) //0.0 --> zapis w postaci zdjecia
         {
             if(!m_PicToFix.isNull() && m_compareMask.get2Dmap()!=nullptr && m_compareMask.getSize().first!=0 && m_compareMask.getSize().second!=0)
             {
@@ -70,6 +106,7 @@ void AverageFilter::Correction()
                                         }
                                     }
                                     m_PicToFix.setPixel(col, row, qRgb(sumR/NUM_PIX, sumG/NUM_PIX, sumB/NUM_PIX));
+                                    setFixedPixel(col,row);
                                 }
                             }
                         }
@@ -79,9 +116,9 @@ void AverageFilter::Correction()
                 qInfo()<<"Pic or mask is null";
 
         }
-        if(getParameters().at(0)==1.0) // --> zapis w postaci 3D maski
+        if(m_Param==1.0) // --> zapis w postaci 3D maski z klesy bazowej
         {
-            if(m_MaskToFix!=nullptr && m_compareMask.get2Dmap()!=nullptr && m_compareMask.getSize().first!=0 && m_compareMask.getSize().second!=0)
+            if(picture!=nullptr && m_compareMask.get2Dmap()!=nullptr && m_compareMask.getSize().first!=pictureHeight && m_compareMask.getSize().second!=pictureLeght)
             {
                 size_t m_height=m_compareMask.getSize().first;
                 size_t m_width=m_compareMask.getSize().second;
@@ -89,9 +126,9 @@ void AverageFilter::Correction()
                 bool wasDmged;
                 do{
                         wasDmged=false;
-                        for(int row = 1;row<m_height-1;row++)
+                        for(size_t row = 1;row<m_height-1;row++)
                         {
-                            for(int col = 1;col<m_width-1;col++)
+                            for(size_t col = 1;col<m_width-1;col++)
                             {
                                 if(mask[row][col]==false)
                                 {
@@ -106,16 +143,17 @@ void AverageFilter::Correction()
                                         for(int j = -1;j<=1;j++)
                                         {
 
-                                            sumR += m_MaskToFix[row+i][col+j][R] * mask[row+i][col+j];
-                                            sumG += m_MaskToFix[row+i][col+j][G] * mask[row+i][col+j];
-                                            sumB += m_MaskToFix[row+i][col+j][B] * mask[row+i][col+j];
+                                            sumR += picture[row+i][col+j][R] * mask[row+i][col+j];
+                                            sumG += picture[row+i][col+j][G] * mask[row+i][col+j];
+                                            sumB += picture[row+i][col+j][B] * mask[row+i][col+j];
 
                                             index++;
                                         }
                                     }
-                                    m_MaskToFix[row][col][R]= sumR/NUM_PIX;
-                                    m_MaskToFix[row][col][G]= sumG/NUM_PIX;
-                                    m_MaskToFix[row][col][B]= sumB/NUM_PIX;
+                                    picture[row][col][R]= sumR/NUM_PIX;
+                                    picture[row][col][G]= sumG/NUM_PIX;
+                                    picture[row][col][B]= sumB/NUM_PIX;
+                                    setFixedPixel(col,row);
                                 }
                             }
                         }
@@ -127,7 +165,5 @@ void AverageFilter::Correction()
         }
         else
             qInfo()<<"wrong value of parameter!";
-    }
-    else
-        qInfo()<<"wrong number of parameters!";
+
 }

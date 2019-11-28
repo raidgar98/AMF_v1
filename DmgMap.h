@@ -5,7 +5,7 @@
 class DmgMap
 {
 private:
-    using coord = std::pair<unsigned int ,unsigned int>;
+    using coord = std::pair<unsigned int,unsigned int >;
     enum Color
     {
 

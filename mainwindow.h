@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include"DamageGenerator.h"
 #include "filter_average.h"
-#include <damagekasia.h>
-#include <DmgMap.h>
+#include "damagekasia.h"
+#include "DmgMap.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
