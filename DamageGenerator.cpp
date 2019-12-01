@@ -5,16 +5,6 @@ using namespace std;
 
 damageDistansKind DamageGenerator::kindOfDamage = damageDistansKind::euclidean;
 
-void DamageGenerator::rgbChanger(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual)
-{
-    if (-1 < xAktual && xAktual < iSizeX && -1 < yAktual && yAktual < iSizeX)
-    {
-        *(iTabR+yAktual*iSizeX+xAktual) = 0;
-        *(iTabG + yAktual * iSizeX + xAktual) = 0;
-        *(iTabB + yAktual * iSizeX + xAktual) = 0;
-    }
-}
-
 DamageGenerator::DamageGenerator()
 {
 }

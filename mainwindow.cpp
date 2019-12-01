@@ -36,7 +36,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_BtnLoad_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/raidg", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     SrcImage.load(fileName);
 
     ui->LblSource->setPixmap(QPixmap::fromImage(SrcImage.scaled(ui->LblSource->width(), ui->LblSource->height(), Qt::KeepAspectRatio )));
@@ -89,7 +89,7 @@ void MainWindow::on_btnFix_clicked()
     {
         if(ui->AverageRBtn->isChecked())
         {
-            AverageFilter av(*map, map->getDmg());
+            AverageFilter av(map->get_points(), map->getDmg());
             av.Correction();
             av.getFixedPicture(FixedImage);
 

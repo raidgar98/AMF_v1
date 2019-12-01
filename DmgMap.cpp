@@ -128,16 +128,17 @@ void DmgMap::makeMapImages()
         {
             int m_imageWidth=m_raw.width();
             int m_imageHeight=m_raw.height();
-            m_map=QImage(m_imageWidth,m_imageHeight,QImage::Format_RGB32);
-
+            m_map=QImage(m_imageWidth,m_imageHeight,QImage::Format_RGBA8888);
+            m_map.fill(Qt::black);
             for (int i=0;i<m_imageWidth;i++)
             {
                 for (int  j=0;j<m_imageHeight;j++)
                 {
-                    if(m_raw.pixel(i,j)==m_dmg.pixel(i,j))
-                        m_map.setPixel(i,j,qRgb(0,0,0));
-                    else
-                        m_map.setPixel(i,j,qRgb(255,255,255));
+                    if(m_raw.pixel(i,j) != m_dmg.pixel(i,j))
+                    {
+                        m_map.setPixel(i,j, Qt::white);
+                        pnts.push_back(QPoint{i,j});
+                    }
                 }
             }
 

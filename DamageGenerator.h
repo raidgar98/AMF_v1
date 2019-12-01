@@ -14,9 +14,6 @@ enum damageDistansKind
 
 class DamageGenerator
 {
-private:
-    static void rgbChanger(int*iTabR, int*iTabG, int*iTabB, size_t iSizeX, size_t iSizeY, int xAktual, int yAktual);
-
 protected:
     static damageDistansKind kindOfDamage;
 

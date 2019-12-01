@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include"DamageGenerator.h"
-#include "filter_average.h"
+//#include "filter_average.h"
 #include "DamageGenerator.h"
 #include "DmgMap.h"
 

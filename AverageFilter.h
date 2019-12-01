@@ -3,6 +3,8 @@
 #include "DmgMap.h"
 #include "baseFilter.h"
 
+#include <queue>
+
 constexpr size_t NUM_PIX = 9;
 
 class AverageFilter
@@ -17,15 +19,15 @@ private:
         ZAPIS_JAKO_MASKA_3D = 1
     }m_Param{ NIE_USTAWIONO };
 
-    DmgMap m_compareMask;
+    QQueue<QPoint> broken_points;
 
 public:
 
 AverageFilter() = delete;
-AverageFilter(DmgMap const &i_dmpmap, const QImage& i_image);
+AverageFilter(QQueue<QPoint> const &i_dmpmap, const QImage& i_image);
 
 void setObjectToFix(QImage i_Image) { takePicture(i_Image); }
-void setMap(DmgMap &i_compareM) { m_compareMask = i_compareM; }
+//void setMap(DmgMap &i_compareM) { m_compareMask = i_compareM; }
 void setParameters(const vector<double>& iParameters) override;
 void getFixedPicture(QImage& pic) const;
 

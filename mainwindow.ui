@@ -1437,6 +1437,9 @@
                <property name="maximum">
                 <number>100</number>
                </property>
+               <property name="value">
+                <number>10</number>
+               </property>
               </widget>
              </item>
              <item row="0" column="1">
@@ -1891,6 +1894,9 @@
                </property>
                <property name="maximum">
                 <number>100</number>
+               </property>
+               <property name="value">
+                <number>10</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -2827,6 +2833,9 @@
                <property name="maximum">
                 <number>10000</number>
                </property>
+               <property name="value">
+                <number>10</number>
+               </property>
               </widget>
              </item>
              <item row="0" column="1">
@@ -3281,6 +3290,9 @@
                </property>
                <property name="maximum">
                 <number>10000</number>
+               </property>
+               <property name="value">
+                <number>10</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -4201,6 +4213,9 @@
              </property>
              <property name="text">
               <string>Average Filter</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

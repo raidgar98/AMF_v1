@@ -315,6 +315,7 @@ public:
 #endif
         SpinDamSize->setPalette(palette2);
         SpinDamSize->setMaximum(100);
+        SpinDamSize->setValue(10);
 
         formLayout_2->setWidget(0, QFormLayout::LabelRole, SpinDamSize);
 
@@ -378,6 +379,7 @@ public:
 #endif
         SpinerDamSize->setPalette(palette3);
         SpinerDamSize->setMaximum(100);
+        SpinerDamSize->setValue(10);
         SpinerDamSize->setOrientation(Qt::Horizontal);
 
         formLayout_2->setWidget(0, QFormLayout::FieldRole, SpinerDamSize);
@@ -513,6 +515,7 @@ public:
 #endif
         SpinDamNum->setPalette(palette5);
         SpinDamNum->setMaximum(10000);
+        SpinDamNum->setValue(10);
 
         formLayout->setWidget(0, QFormLayout::LabelRole, SpinDamNum);
 
@@ -576,6 +579,7 @@ public:
 #endif
         SliderDamNum->setPalette(palette6);
         SliderDamNum->setMaximum(10000);
+        SliderDamNum->setValue(10);
         SliderDamNum->setOrientation(Qt::Horizontal);
 
         formLayout->setWidget(0, QFormLayout::FieldRole, SliderDamNum);
@@ -714,6 +718,7 @@ public:
         palette8.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
         AverageRBtn->setPalette(palette8);
+        AverageRBtn->setChecked(true);
 
         verticalLayout_3->addWidget(AverageRBtn);
 

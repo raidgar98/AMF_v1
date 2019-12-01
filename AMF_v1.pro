@@ -30,8 +30,8 @@ SOURCES += \
         DmgMap.cpp \
         baseFilter.cpp \
 #        damagekasia.cpp \
-        filter_average.cpp \
-        imageconverter.cpp \
+	izimage.cpp \
+	izimageobjects.cpp \
         main.cpp \
         mainwindow.cpp
 
@@ -41,8 +41,8 @@ HEADERS += \
         DmgMap.h \
         baseFilter.h \
 #        damagekasia.h \
-        filter_average.h \
-        imageconverter.h \
+	izimage.h \
+	izimageobjects.h \
         mainwindow.h
 
 FORMS += \

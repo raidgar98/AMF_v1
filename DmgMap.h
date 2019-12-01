@@ -1,6 +1,7 @@
 #pragma once
 #include <QImage>
 #include <iostream>
+#include <QQueue>
 #include <QtDebug>
 class DmgMap
 {
@@ -18,7 +19,7 @@ protected:
     QImage m_raw;
     QImage m_dmg;
     QImage m_map;
-
+    QQueue<QPoint> pnts;
 
     bool ** m_2Dmap = nullptr;
     unsigned int m_2Dwidth;
@@ -50,6 +51,7 @@ public:
     QImage getRaw() const { return m_raw; }
     QImage getDmg() const { return m_dmg; }
     const QImage& getMap() const { return m_map; }
+    const QQueue<QPoint>& get_points() const noexcept { return pnts; }
 
     coord getSize() {return coord(m_2Dwidth,m_2Dheight);}
 
