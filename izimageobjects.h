@@ -15,7 +15,7 @@ using idx = coord_num;
 using color_num = unsigned char;
 
 //macros
-#define qRGB( r, g, b) qRgb(r, g, b)
+#define qRGB( r, g, b, a) qRgba(r, g, b, a)
 
 //constexpresions
 constexpr QImage::Format default_format = QImage::Format::Format_RGBA8888;
@@ -67,14 +67,17 @@ struct pixel_representation
     color_num R()                                                       const noexcept;
     color_num G()                                                       const noexcept;
     color_num B()                                                       const noexcept;
+    color_num A()                                                       const noexcept;
 
     void R(const color_num)                                                   noexcept;
     void G(const color_num)                                                   noexcept;
     void B(const color_num)                                                   noexcept;
+    void A(const color_num)                                                   noexcept;
 
     void R(const RGB)                                                         noexcept;
     void G(const RGB)                                                         noexcept;
     void B(const RGB)                                                         noexcept;
+    void A(const RGB)                                                         noexcept;
 
     void operator=(const RGB)                                                 noexcept;
 
@@ -88,6 +91,8 @@ struct pixel_representation
 
     pixel_representation& operator=(const pixel_representation&) =             default;
     pixel_representation& operator=(pixel_representation&&) =                  default;
+
+    operator QString()                                                  const noexcept;
 
 private:
 

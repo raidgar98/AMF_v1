@@ -39,7 +39,7 @@ void DamageGenerator::makeDamage(const QImage& src, QImage& dst, size_t iDamageS
                 if(xAktual < 0 || yAktual < 0) continue;
                 if(xAktual >= src.width() || yAktual >= src.height()) continue;
 
-                dst.setPixel(xAktual, yAktual, Qt::black);
+                dst.setPixel(xAktual, yAktual, Qt::transparent);
             }
     }
 }

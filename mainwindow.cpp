@@ -34,10 +34,13 @@ MainWindow::~MainWindow()
     }
  }
 
+#define cout qDebug()
+
 void MainWindow::on_BtnLoad_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/raidg", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     SrcImage.load(fileName);
+    SrcImage = SrcImage.convertToFormat(QImage::Format_RGBA8888);
 
     ui->LblSource->setPixmap(QPixmap::fromImage(SrcImage.scaled(ui->LblSource->width(), ui->LblSource->height(), Qt::KeepAspectRatio )));
     ui->LblFixed->clear();
@@ -45,8 +48,6 @@ void MainWindow::on_BtnLoad_clicked()
     ui->LblMap->clear();
 
 }
-
-#define cout qDebug()
 
 void MainWindow::on_btnDamage_clicked() //dodac ograniczenie, jesli do zniszczenia więcej niż 100% obrazu
 {
@@ -68,6 +69,7 @@ void MainWindow::on_btnDamage_clicked() //dodac ograniczenie, jesli do zniszczen
         ui->LblDamaged->clear();
 
         map.reset(new DmgMap(SrcImage, DamagedImage));
+
         map->makeMapImages();
         Map=map->getMap();
 
@@ -90,10 +92,11 @@ void MainWindow::on_btnFix_clicked()
         if(ui->AverageRBtn->isChecked())
         {
             AverageFilter av(map->get_points(), map->getDmg());
-            av.Correction();
             av.getFixedPicture(FixedImage);
-
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
+//            av.Correction();
+//            av.getFixedPicture(FixedImage);
+//            ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
         }
         else
         {

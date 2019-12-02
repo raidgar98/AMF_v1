@@ -25,6 +25,12 @@ color_num pixel_representation::B() const noexcept
     return __m_data.ptr->b;
 }
 
+color_num pixel_representation::A() const noexcept
+{
+    if( isNull() ) return Izimage::null_color;
+    return __m_data.ptr->a;
+}
+
 void pixel_representation::R(const color_num color) noexcept
 {
     if( isNull() ) return;
@@ -41,6 +47,12 @@ void pixel_representation::B(const color_num color) noexcept
 {
     if( isNull() ) return;
     __m_data.ptr->b = color;
+}
+
+void pixel_representation::A(const color_num color) noexcept
+{
+    if( isNull() ) return;
+    __m_data.ptr->a = color;
 }
 
 void pixel_representation::R(const RGB color) noexcept
@@ -61,11 +73,23 @@ void pixel_representation::B(const RGB color) noexcept
     __m_data.ptr->b = qRed(color);
 }
 
+void pixel_representation::A(const RGB color) noexcept
+{
+    if( isNull() ) return;
+    __m_data.ptr->b = qAlpha(color);
+}
+
 void pixel_representation::operator=(const RGB color) noexcept
 {
     R(color);
     G(color);
     B(color);
+    A(color);
+}
+
+pixel_representation::operator QString() const noexcept
+{
+    return "RGBA(" + QString::number(R()) + ", " + QString::number(G()) + ", " + QString::number(B()) + ", " + QString::number(A()) + ")";
 }
 
 bool pixel_representation::operator==(const pixel_representation & src) const noexcept
@@ -156,7 +180,7 @@ RGB px_square::medium() const noexcept
                 med_g = ( med_g + var.G() ) / 2.0;
                 med_b = ( med_b + var.B() ) / 2.0;
             }
-    return qRGB(med_r, med_g, med_b);
+    return qRGB(med_r, med_g, med_b, 255);
 }
 
 bool px_square::isNull() const noexcept

@@ -107,8 +107,13 @@ izimage_iterator Izimage::end() const noexcept
     return null_iterator;
 }
 
+#include <QDebug>
+
 void Izimage::render(QImage &dst) const noexcept
 {
+    for(const auto& var : *this)
+        qDebug() << var << translate(var);
+
     dst = QImage( width(), height(), default_format);
     dst.fill(Qt::white);
     const uchar * tmp = dst.bits();
