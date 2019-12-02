@@ -1,4 +1,5 @@
 #include "izimage.h"
+#include <QDebug>
 
 const pixel Izimage::null_pixel{ nullptr };
 const coord Izimage::null_coord{ max_coord_number, max_coord_number };
@@ -6,6 +7,8 @@ const px_square Izimage::null_px_square{ nullptr, null_pixel };
 const idx Izimage::null_idx{ max_idx };
 const izimage_iterator Izimage::null_iterator{ nullptr };
 const color_num Izimage::null_color{ 0 };
+
+#define cout qDebug()
 
 Izimage::Izimage(const QImage & src) noexcept
 {
@@ -103,19 +106,14 @@ izimage_iterator Izimage::begin() const noexcept
 
 izimage_iterator Izimage::end() const noexcept
 {
-   // return izimage_iterator(&__m_data[max_range]);
-    return null_iterator;
+    return izimage_iterator(&(__m_data[max_range])) ;
+//    return null_iterator;
 }
-
-#include <QDebug>
 
 void Izimage::render(QImage &dst) const noexcept
 {
-    for(const auto& var : *this)
-        qDebug() << var << translate(var);
-
     dst = QImage( width(), height(), default_format);
-    dst.fill(Qt::white);
+    dst.fill(qRgba(255,255,255,255));
     const uchar * tmp = dst.bits();
     memcpy( const_cast<uchar*>(tmp), __m_data.get(), max_range * sizeof(raw_pixel) );
 }

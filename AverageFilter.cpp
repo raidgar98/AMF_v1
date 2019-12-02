@@ -1,10 +1,13 @@
 #include "AverageFilter.h"
+#include <QDebug>
 
-AverageFilter::AverageFilter(QQueue<QPoint> const &i_dmpmap, QImage const & src)
+#define cout qDebug()
+
+AverageFilter::AverageFilter(std::set<coord> const &i_dmpmap, QImage const & src)
     :baseFilter (src), broken_points{i_dmpmap}
 {}
 
-void AverageFilter::setParameters(const vector<double> & iParameters)
+void AverageFilter::setParameters(const std::vector<double> & iParameters)
 {
 //    if( ( iParameters.size() == 1 && iParameters.at(0) == 1.0) || iParameters.at(0) == 0.0 )
     //        m_Param = iParameters.at(0);
@@ -42,11 +45,28 @@ void AverageFilter::Correction()
 //                }
 //    }while( wasDmged );
 
-    while (broken_points.length() != 0)
+//    for(pixel var : picture)
+//    {
+//        if(broken_points.find( picture.translate(var)) == broken_points.end()) continue;
+//        pixel px = picture(picture.translate(var));
+//        px.set(picture.get_square(px).medium());
+//    }
+
+//    for(int i = 0; i < picture.width(); i++)
+//    {
+//        picture(i,0) = qRgba(0, 0, 0, 255);
+//        picture(i,picture.height() - 1) = qRgba(0, 0, 0, 255);
+//        picture(i, (picture.height() - 1) / 2) = qRgba(0, 0, 0, 255);
+//        picture((picture.height() - 1) / 2, i) = qRgba(0, 0, 0, 255);
+//    }
+
+    for( auto it = picture.begin(); it != picture.end(); ++it)
     {
-        QPoint pos{ broken_points.front() };
-        broken_points.pop_front();
-        pixel px = picture.get(pos);
-        px = picture.get_square(px).medium();
+        QStringList st;
+        for(size_t j = 0; j < picture.height() && it != picture.end(); j++, ++it)
+        {
+            st << picture.translate(picture(picture.translate(*it))) + " " + (*it);
+        }
+        qDebug() << st.join(" ");
     }
 }

@@ -1,10 +1,12 @@
 #include "izimageobjects.h"
 #include "izimage.h"
+#include <QDebug>
 
+#define cout qDebug()
 
 bool pixel_representation::isNull() const noexcept
 {
-    return ( __m_data.ptr == Izimage::null_pixel.__m_data.ptr ) || ( __m_data.ptr->a == Izimage::null_color );
+    return ( __m_data.ptr == Izimage::null_pixel.__m_data.ptr );
 }
 
 color_num pixel_representation::R() const noexcept
@@ -34,52 +36,61 @@ color_num pixel_representation::A() const noexcept
 void pixel_representation::R(const color_num color) noexcept
 {
     if( isNull() ) return;
+    cout << "ustawiam R w " << reinterpret_cast<unsigned long long>(__m_data.ptr ) << " na " << color;
     __m_data.ptr->r = color;
 }
 
 void pixel_representation::G(const color_num color) noexcept
 {
     if( isNull() ) return;
+    cout << "ustawiam G w " << reinterpret_cast<unsigned long long>(__m_data.ptr ) << " na " << color;
     __m_data.ptr->g = color;
 }
 
 void pixel_representation::B(const color_num color) noexcept
 {
     if( isNull() ) return;
+    cout << "ustawiam B w " << reinterpret_cast<unsigned long long>(__m_data.ptr ) << " na " << color;
     __m_data.ptr->b = color;
 }
 
 void pixel_representation::A(const color_num color) noexcept
 {
     if( isNull() ) return;
+    cout << "ustawiam A w " << reinterpret_cast<unsigned long long>(__m_data.ptr ) << " na " << color;
     __m_data.ptr->a = color;
 }
 
 void pixel_representation::R(const RGB color) noexcept
 {
     if( isNull() ) return;
-    __m_data.ptr->r = qRed(color);
+    R(static_cast<color_num>(qRed(color)));
 }
 
 void pixel_representation::G(const RGB color) noexcept
 {
     if( isNull() ) return;
-    __m_data.ptr->g = qGreen(color);
+    G(static_cast<color_num>(qGreen(color)));
 }
 
 void pixel_representation::B(const RGB color) noexcept
 {
     if( isNull() ) return;
-    __m_data.ptr->b = qRed(color);
+    B(static_cast<color_num>(qBlue(color)));
 }
 
 void pixel_representation::A(const RGB color) noexcept
 {
     if( isNull() ) return;
-    __m_data.ptr->b = qAlpha(color);
+    A(static_cast<color_num>(qAlpha(color)));
 }
 
 void pixel_representation::operator=(const RGB color) noexcept
+{
+    set(color);
+}
+
+void pixel_representation::set(const RGB color) noexcept
 {
     R(color);
     G(color);
@@ -144,6 +155,21 @@ bool point_representation::operator!=(const point_representation & src) const no
     return !(this->operator==(src));
 }
 
+bool point_representation::operator<(const point_representation & src) const noexcept
+{
+    return (src.x() == x() ? y() < src.y() : x() < src.x());
+}
+
+bool operator<(const point_representation& src1, const point_representation& src2)
+{
+    return  (src1.x() == src2.x() ? src1.y() < src2.y() : src1.x() < src2.x());
+}
+
+//bool operator==(const point_representation& src1, const point_representation& src2)
+//{
+//    return (src1.x() == src2.x()) && (src1.y() == src2.y());
+//}
+
 coord_num point_representation::x() const noexcept
 {
     return __m_x;
@@ -164,6 +190,11 @@ void point_representation::y(const coord_num _y) noexcept
     __m_y = _y;
 }
 
+point_representation::operator QString() const noexcept
+{
+    return "coord(" + QString::number(__m_x) + "," + QString::number(__m_y) + ")";
+}
+
 point_representation::operator QPoint() const noexcept
 {
     return QPoint( x(), y() );
@@ -174,7 +205,7 @@ RGB px_square::medium() const noexcept
     double med_r{0.0}, med_g{0.0}, med_b{0.0};
     for(const auto& tab : data)
         for(const auto& var : tab)
-            if(!var.isNull())
+            if(!var.isNull() && var.A() > 0)
             {
                 med_r = ( med_r + var.R() ) / 2.0;
                 med_g = ( med_g + var.G() ) / 2.0;
@@ -195,7 +226,7 @@ bool px_square::isNull() const noexcept
 px_square::px_square(const Izimage * parent, const pixel & px) noexcept
     :data{ { { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel } } }
 {
-    if( parent == nullptr && (false || px.isNull()) ) return;
+//    if( parent == nullptr && (false || px.isNull()) ) return;
     const coord central = parent->translate(px);
     if(central == Izimage::null_coord) return;
     for(int i = -1; i <= 1; i++)
@@ -223,10 +254,6 @@ void izimage_iterator::operator++() noexcept
 
 bool izimage_iterator::operator==(const izimage_iterator & src) const noexcept
 {
-    if(!isNull())
-    {
-        if(d_ptr.ptr->a == 0 && src.isNull()) return true;
-    }
     return  ( d_ptr.ptr == src.d_ptr.ptr );
 }
 

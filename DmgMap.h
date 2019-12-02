@@ -1,12 +1,14 @@
 #pragma once
 #include <QImage>
-#include <iostream>
-#include <QQueue>
+//#include <iostream>
 #include <QtDebug>
+#include <set>
+
+#include "izimageobjects.h"
+
 class DmgMap
 {
 private:
-    using coord = std::pair<unsigned int,unsigned int >;
     enum Color
     {
         R=0,
@@ -19,7 +21,7 @@ protected:
     QImage m_raw;
     QImage m_dmg;
     QImage m_map;
-    QQueue<QPoint> pnts;
+    std::set<coord> pnts;
 
     bool ** m_2Dmap = nullptr;
     unsigned int m_2Dwidth;
@@ -49,9 +51,9 @@ public:
     void setBoth(QImage &i_raw, QImage &i_dmg) { setRaw(i_raw); setDmg(i_dmg); }
     void setDamagedPixel(size_t i_x,size_t i_y);
     QImage getRaw() const { return m_raw; }
-    QImage getDmg() const { return m_dmg; }
+    const QImage& getDmg() const { return m_dmg; }
     const QImage& getMap() const { return m_map; }
-    const QQueue<QPoint>& get_points() const noexcept { return pnts; }
+    const std::set<coord>& get_points() const noexcept { return pnts; }
 
     coord getSize() {return coord(m_2Dwidth,m_2Dheight);}
 

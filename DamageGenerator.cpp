@@ -1,7 +1,7 @@
 #include "DamageGenerator.h"
 #include <cstdlib>
-#include<iostream>
-using namespace std;
+//#include<iostream>
+//using namespace std;
 
 damageDistansKind DamageGenerator::kindOfDamage = damageDistansKind::euclidean;
 

@@ -80,6 +80,7 @@ struct pixel_representation
     void A(const RGB)                                                         noexcept;
 
     void operator=(const RGB)                                                 noexcept;
+    void set(const RGB)                                                       noexcept;
 
     bool operator==(const pixel_representation&)                        const noexcept;
     bool operator!=(const pixel_representation&)                        const noexcept;
@@ -123,6 +124,7 @@ struct point_representation
     bool isNull()                                                       const noexcept;
     bool operator==(const point_representation&)                        const noexcept;
     bool operator!=(const point_representation&)                        const noexcept;
+    bool operator<(const point_representation&)                         const noexcept;
 
     coord_num x()                                                       const noexcept;
     coord_num y()                                                       const noexcept;
@@ -131,6 +133,7 @@ struct point_representation
     void y(const coord_num)                                                   noexcept;
 
     operator QPoint()                                                   const noexcept;
+    operator QString()                                                  const noexcept;
 
 private:
 
@@ -163,26 +166,26 @@ private:
 struct izimage_iterator
 {
 
-    izimage_iterator() =                                                                delete;
-    ~izimage_iterator() =                                                              default;
+    izimage_iterator() =                                                                        delete;
+    ~izimage_iterator() =                                                                      default;
     izimage_iterator(const izimage_iterator&) =                                                default;
     izimage_iterator(izimage_iterator&&) =                                                     default;
     izimage_iterator& operator=(const izimage_iterator&) =                                     default;
     izimage_iterator& operator=(izimage_iterator&&) =                                          default;
 
-    pixel operator*()                                                   const noexcept;
-    pixel operator->()                                                  const noexcept;
-    void operator++()                                                         noexcept;
+    pixel operator*()                                                                   const noexcept;
+    pixel operator->()                                                                  const noexcept;
+    void operator++()                                                                         noexcept;
 
-    bool operator==(const izimage_iterator&)                                    const noexcept;
-    bool operator!=(const izimage_iterator&)                                    const noexcept;
-    bool isNull()                                                       const noexcept;
+    bool operator==(const izimage_iterator&)                                            const noexcept;
+    bool operator!=(const izimage_iterator&)                                            const noexcept;
+    bool isNull()                                                                       const noexcept;
 
 private:
 
     dummy_pointer<raw_pixel> d_ptr;
 
-    explicit izimage_iterator(raw_pixel*)                                             noexcept;
+    explicit izimage_iterator(raw_pixel*)                                                     noexcept;
 
     friend class Izimage;
 

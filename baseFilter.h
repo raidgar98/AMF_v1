@@ -3,7 +3,7 @@
 #include<vector>
 #include "izimage.h"
 
-using namespace std;
+//using namespace std;
 
 template<typename T>
 using array_pointer_member = std::shared_ptr<T[]>;
@@ -33,7 +33,7 @@ public:
 
     /// @brief ustawianie parametrów jest za pomocą wektora, w klasach pochodnych trzeba zdefiniować, która z jego składowych będzie wypełniała dany parametr
     /// @param iParameters - zadane parametry
-    virtual void setParameters(const vector<double>& iParameters) = 0;
+    virtual void setParameters(const std::vector<double>& iParameters) = 0;
 
     /// @brief zaznacza na mapie naprawione pixele
     /// @param xPixel, yPixel - współżędne
