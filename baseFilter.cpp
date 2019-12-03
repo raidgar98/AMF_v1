@@ -1,6 +1,6 @@
 #include "baseFilter.h"
 #include <cstring>
-#include <QDebug>
+#include "utility.cpp"
 
 baseFilter::baseFilter(const QImage &src)
     :picture{ src }

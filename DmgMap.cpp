@@ -120,8 +120,6 @@ DmgMap::~DmgMap()
     release2Dtab();
 }
 
-#define cout qDebug()
-
 void DmgMap::makeMapImages()
 {
     if(!m_raw.isNull() && !m_dmg.isNull()  && m_raw.width()==m_dmg.width() && m_raw.height()==m_dmg.height())

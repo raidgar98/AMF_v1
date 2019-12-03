@@ -4,8 +4,10 @@
 #include <QImage>
 
 //STL libraries
+#include <array>
 
 //Own dependencies
+#include "utility.cpp"
 
 //usings
 using RGB = QRgb;
@@ -51,6 +53,7 @@ struct dummy_pointer
 /// @brief don't even look at this struct. It MUST looks like this. i dare you, DON'T TOUCH THIS
 struct raw_pixel
 {
+    /// @variable Stands for RGBA values
     color_num b;
     color_num g;
     color_num r;
@@ -64,6 +67,7 @@ struct pixel_representation
     /// @brief it's good to check is everything ok
     bool isNull()                                                       const noexcept;
 
+    /// @getters / setters...
     color_num R()                                                       const noexcept;
     color_num G()                                                       const noexcept;
     color_num B()                                                       const noexcept;
@@ -79,20 +83,29 @@ struct pixel_representation
     void B(const RGB)                                                         noexcept;
     void A(const RGB)                                                         noexcept;
 
+    /// @fn operator that makes life easier
     void operator=(const RGB)                                                 noexcept;
     void set(const RGB)                                                       noexcept;
 
+    /// @fn compare operators (compares RGBA values)
     bool operator==(const pixel_representation&)                        const noexcept;
     bool operator!=(const pixel_representation&)                        const noexcept;
 
+    /// @fn Theese copy/move constructors just assign pointer, they don't touch RGBA values
     pixel_representation() =                                                    delete;
     ~pixel_representation() =                                                  default;
     pixel_representation(const pixel_representation&)                         noexcept;
     pixel_representation(pixel_representation&&)                              noexcept;
 
-    pixel_representation& operator=(const pixel_representation&) =             default;
-    pixel_representation& operator=(pixel_representation&&) =                  default;
+    /// @fn Theese two operators assign values
+    pixel_representation& operator=(const pixel_representation&)              noexcept;
+    pixel_representation& operator=(pixel_representation&&)                   noexcept;
 
+    /// @fn Theese two operators, are assigment operator, but for member pointer
+    void operator()(const pixel_representation&)                              noexcept;
+    void operator()(pixel_representation&&)                                   noexcept;
+
+    /// @fn defined for Debug purpose
     operator QString()                                                  const noexcept;
 
 private:
@@ -111,6 +124,7 @@ using pixel = pixel_representation;
 /// @brief represents coordinates - alternative to QPoint ( even with conversion to it )
 struct point_representation
 {
+    /// @fn default constructors, no way that somethin goes wrong round here
     point_representation() =                                                   default;
     point_representation(point_representation&&) =                             default;
     point_representation(const point_representation&) =                        default;
@@ -118,25 +132,31 @@ struct point_representation
     explicit point_representation(const QPoint&)                              noexcept;
     explicit point_representation(QPoint&&)                                   noexcept;
 
+    /// @fn same here, assigment operators
     point_representation& operator=(point_representation&&) =                  default;
     point_representation& operator=(const point_representation&) =             default;
 
+    /// @fn compare methodes and operators (less, to use std::set)
     bool isNull()                                                       const noexcept;
     bool operator==(const point_representation&)                        const noexcept;
     bool operator!=(const point_representation&)                        const noexcept;
     bool operator<(const point_representation&)                         const noexcept;
 
+    /// @fn getters / setters
     coord_num x()                                                       const noexcept;
     coord_num y()                                                       const noexcept;
 
     void x(const coord_num)                                                   noexcept;
     void y(const coord_num)                                                   noexcept;
 
+
+    /// @fn Theese two makes life easier in debugging and assigns
     operator QPoint()                                                   const noexcept;
     operator QString()                                                  const noexcept;
 
 private:
 
+    /// @variable coordinates, which defines this structure
     coord_num __m_x = 0, __m_y = 0;
 
 };
@@ -145,19 +165,24 @@ using coord = point_representation;
 /// @brief represents square, 9-pixel, part of image
 struct px_square
 {
-//    px_square()                                                               noexcept;
+    /// @fn Theese constructors guarantee, that only Izimage can create 'fresh' object
     px_square(const px_square&) =                                              default;
     px_square(px_square&&) =                                                   default;
     px_square& operator=(const px_square&) =                                   default;
     px_square& operator=(px_square&&) =                                        default;
 
-    RGB medium()                                                        const noexcept;
-    bool isNull()                                                       const noexcept;
+    /// @fn This methode calculates RGB average of pixels, inside 'data' var. Null or '0 opacity' ones are skipped
+    RGB average()                                                        const noexcept;
+
+    /// @fn This methode checks is there at least one not null pixel
+    bool isNull()                                                        const noexcept;
 
 private:
 
+    /// @variable storage of processed pixels
     std::array<std::array<pixel, square_size>, square_size> data;
 
+    /// @fn constructor for Izimage::get_px_square
     px_square(const Izimage*, const pixel&)                                   noexcept;
     friend class Izimage;
 };
@@ -165,7 +190,7 @@ private:
 /// @brief standard izimage_iterator, that goes for every row, down the picture
 struct izimage_iterator
 {
-
+    /// @fn standard assigment operators and constructors for standard iterator
     izimage_iterator() =                                                                        delete;
     ~izimage_iterator() =                                                                      default;
     izimage_iterator(const izimage_iterator&) =                                                default;
@@ -173,19 +198,27 @@ struct izimage_iterator
     izimage_iterator& operator=(const izimage_iterator&) =                                     default;
     izimage_iterator& operator=(izimage_iterator&&) =                                          default;
 
+    /// @fn dereferrence operators
     pixel operator*()                                                                   const noexcept;
     pixel operator->()                                                                  const noexcept;
     void operator++()                                                                         noexcept;
+    void operator++(int)                                                                      noexcept;
 
+    /// @fn compare operators and methode
     bool operator==(const izimage_iterator&)                                            const noexcept;
     bool operator!=(const izimage_iterator&)                                            const noexcept;
     bool isNull()                                                                       const noexcept;
 
 private:
 
-    dummy_pointer<raw_pixel> d_ptr;
+    /// @variable Pointer to parent storage. Not pretty, but not buggy also
+    dummy_pointer<const Izimage> parent;
 
-    explicit izimage_iterator(raw_pixel*)                                                     noexcept;
+    /// @variable Index in inner parent array
+    idx current_index;
+
+    /// @fn Only Izimage::begin and Izimage::end can create 'fresh' iterator
+    explicit izimage_iterator(const Izimage*, const idx index)                                      noexcept;
 
     friend class Izimage;
 

@@ -1,7 +1,5 @@
 #include "AverageFilter.h"
-#include <QDebug>
-
-#define cout qDebug()
+#include "utility.cpp"
 
 AverageFilter::AverageFilter(std::set<coord> const &i_dmpmap, QImage const & src)
     :baseFilter (src), broken_points{i_dmpmap}
@@ -47,10 +45,20 @@ void AverageFilter::Correction()
 
 //    for(pixel var : picture)
 //    {
-//        if(broken_points.find( picture.translate(var)) == broken_points.end()) continue;
-//        pixel px = picture(picture.translate(var));
-//        px.set(picture.get_square(px).medium());
+//        const coord tmp1 = picture.translate(var);
+//        const auto res = broken_points.find( tmp1 );
+//        const coord tmp3 = *res;
+//        if( res == broken_points.end() ) continue;
+////        var.set(picture.get_square(var).average());
+//        px_square tmp2 = picture.get_square(var);
+//        var = tmp2.average();
 //    }
+
+    for(const auto& var : broken_points)
+    {
+        log({ QString(picture.translate(picture.translate(var))) });
+        picture(var) = picture(12,0); //picture.get_square(picture(var)).average();
+    }
 
 //    for(int i = 0; i < picture.width(); i++)
 //    {
@@ -60,13 +68,12 @@ void AverageFilter::Correction()
 //        picture((picture.height() - 1) / 2, i) = qRgba(0, 0, 0, 255);
 //    }
 
-    for( auto it = picture.begin(); it != picture.end(); ++it)
-    {
-        QStringList st;
-        for(size_t j = 0; j < picture.height() && it != picture.end(); j++, ++it)
-        {
-            st << picture.translate(picture(picture.translate(*it))) + " " + (*it);
-        }
-        qDebug() << st.join(" ");
-    }
+//    for( auto it = picture.begin(); it != picture.end(); ++it)
+//    {
+//        QStringList st;
+//        for(size_t j = 0; j < picture.height() && it != picture.end(); j++, ++it)
+//        {
+//            st << picture.translate(picture(picture.translate(*it))) + " " + (*it);
+//        }
+//    }
 }

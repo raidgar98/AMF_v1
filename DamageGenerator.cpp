@@ -18,7 +18,7 @@ DamageGenerator::~DamageGenerator()
 
 void DamageGenerator::makeDamage(const QImage& src, QImage& dst, size_t iDamageStartNumber, int iPixelDamageNumber)
 {
-    random_device randomGenerator;
+    std::mt19937_64 randomGenerator;
     int xCenter;
     int yCenter;
     int xAktual;

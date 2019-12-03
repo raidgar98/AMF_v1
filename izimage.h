@@ -35,9 +35,6 @@ public: //fields
     /// it can happens if Izimage::translate() detect, that given vlaues are out of range
     const static idx null_idx;
 
-    /// @variable - if any idx is equal to this, it's treated as null
-    const static izimage_iterator null_iterator;
-
     /// @variable - if any color_num is equal to this, it's treated as null
     const static color_num null_color;
 

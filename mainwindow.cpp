@@ -34,8 +34,6 @@ MainWindow::~MainWindow()
     }
  }
 
-#define cout qDebug()
-
 void MainWindow::on_BtnLoad_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/raidg", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));

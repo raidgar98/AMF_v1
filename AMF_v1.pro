@@ -33,7 +33,8 @@ SOURCES += \
 	izimage.cpp \
 	izimageobjects.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    utility.cpp
 
 HEADERS += \
         AverageFilter.h \

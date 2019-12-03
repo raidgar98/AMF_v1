@@ -1,14 +1,11 @@
 #include "izimage.h"
-#include <QDebug>
+#include "utility.cpp"
 
 const pixel Izimage::null_pixel{ nullptr };
 const coord Izimage::null_coord{ max_coord_number, max_coord_number };
 const px_square Izimage::null_px_square{ nullptr, null_pixel };
 const idx Izimage::null_idx{ max_idx };
-const izimage_iterator Izimage::null_iterator{ nullptr };
 const color_num Izimage::null_color{ 0 };
-
-#define cout qDebug()
 
 Izimage::Izimage(const QImage & src) noexcept
 {
@@ -28,6 +25,8 @@ Izimage &Izimage::operator=(const QImage & src) noexcept
     __m_data.reset( new raw[max_range + 1] );
     memcpy(__m_data.get(), src.bits(), max_range * sizeof(raw));
     __m_data[max_range] = { 0, 0, 0, 0 };
+
+    return *this;
 }
 
 #pragma message("redundant code here :(")
@@ -39,6 +38,8 @@ Izimage &Izimage::operator=(QImage && src) noexcept
     __m_data.reset( new raw[max_range + 1] );
     memcpy(__m_data.get(), src.bits(), max_range * sizeof(raw));
     __m_data[max_range] = { 0, 0, 0, 0 };
+
+    return *this;
 }
 
 pixel Izimage::operator()(const QPoint & point) const noexcept
@@ -101,13 +102,12 @@ coord Izimage::translate(const pixel & px) const noexcept
 
 izimage_iterator Izimage::begin() const noexcept
 {
-    return izimage_iterator(__m_data.get());
+    return izimage_iterator(this, 0);
 }
 
 izimage_iterator Izimage::end() const noexcept
 {
-    return izimage_iterator(&(__m_data[max_range])) ;
-//    return null_iterator;
+    return izimage_iterator(this, max_range);
 }
 
 void Izimage::render(QImage &dst) const noexcept
