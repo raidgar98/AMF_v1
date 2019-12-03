@@ -2,7 +2,7 @@
 #include <QImage>
 //#include <iostream>
 #include <QtDebug>
-#include <set>
+#include <vector>
 
 #include "izimageobjects.h"
 
@@ -21,7 +21,7 @@ protected:
     QImage m_raw;
     QImage m_dmg;
     QImage m_map;
-    std::set<coord> pnts;
+    std::vector<coord> pnts;
 
     bool ** m_2Dmap = nullptr;
     unsigned int m_2Dwidth;
@@ -53,7 +53,7 @@ public:
     QImage getRaw() const { return m_raw; }
     const QImage& getDmg() const { return m_dmg; }
     const QImage& getMap() const { return m_map; }
-    const std::set<coord>& get_points() const noexcept { return pnts; }
+    const std::vector<coord>& get_points() const noexcept { return pnts; }
 
     coord getSize() {return coord(m_2Dwidth,m_2Dheight);}
 

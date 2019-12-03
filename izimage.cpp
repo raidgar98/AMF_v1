@@ -1,5 +1,5 @@
 #include "izimage.h"
-#include "utility.cpp"
+#include "utility.h"
 
 const pixel Izimage::null_pixel{ nullptr };
 const coord Izimage::null_coord{ max_coord_number, max_coord_number };
@@ -84,14 +84,14 @@ px_square Izimage::get_square(const pixel & px) const noexcept
 idx Izimage::translate(const coord & point) const noexcept
 {
     if( point.isNull() || point.x() > width() || point.y() > height() ) return null_idx;
-    return ( point.y() * height() ) + point.x();
+    return ( point.y() * width() ) + point.x();
 }
 
 coord Izimage::translate(const idx index) const noexcept
 {
     if( index >= max_range ) return null_coord;
-    const idx row = index / height();
-    return { row, index - (row * height()) };
+    const idx row = (index / width());
+    return { index - (row * width()), row - 1};
 }
 
 coord Izimage::translate(const pixel & px) const noexcept

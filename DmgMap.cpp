@@ -135,7 +135,7 @@ void DmgMap::makeMapImages()
                     if(m_raw.pixel(i,j) != m_dmg.pixel(i,j))
                     {
                         m_map.setPixel(i,j, qRgba(0, 0, 0, 0));
-                        pnts.insert(coord(i,j));
+                        pnts.push_back(coord(i,j));
                     }
                 }
             }

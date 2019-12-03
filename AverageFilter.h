@@ -19,12 +19,12 @@ private:
         ZAPIS_JAKO_MASKA_3D = 1
     }m_Param{ NIE_USTAWIONO };
 
-    std::set<coord> broken_points;
+    std::vector<coord> broken_points;
 
 public:
 
 AverageFilter() = delete;
-AverageFilter(std::set<coord> const &i_dmpmap, const QImage& i_image);
+AverageFilter(std::vector<coord> const &i_dmpmap, const QImage& i_image);
 
 void setObjectToFix(QImage i_Image) { takePicture(i_Image); }
 //void setMap(DmgMap &i_compareM) { m_compareMask = i_compareM; }

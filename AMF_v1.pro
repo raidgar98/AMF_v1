@@ -33,8 +33,7 @@ SOURCES += \
 	izimage.cpp \
 	izimageobjects.cpp \
         main.cpp \
-        mainwindow.cpp \
-    utility.cpp
+        mainwindow.cpp
 
 HEADERS += \
         AverageFilter.h \
@@ -44,7 +43,8 @@ HEADERS += \
 #        damagekasia.h \
 	izimage.h \
 	izimageobjects.h \
-        mainwindow.h
+        mainwindow.h \
+    utility.h
 
 FORMS += \
         mainwindow.ui

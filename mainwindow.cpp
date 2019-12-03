@@ -90,8 +90,6 @@ void MainWindow::on_btnFix_clicked()
         if(ui->AverageRBtn->isChecked())
         {
             AverageFilter av(map->get_points(), map->getDmg());
-//            av.getFixedPicture(FixedImage);
-//            ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
             av.Correction();
             av.getFixedPicture(FixedImage);
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));

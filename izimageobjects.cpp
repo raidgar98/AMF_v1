@@ -37,28 +37,28 @@ color_num pixel_representation::A() const noexcept
 void pixel_representation::R(const color_num color) noexcept
 {
     if( isNull() ) return;
-    log( { "ustawiam R w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
+//    log( { "ustawiam R w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->r = color;
 }
 
 void pixel_representation::G(const color_num color) noexcept
 {
     if( isNull() ) return;
-    log( { "ustawiam G w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
+//    log( { "ustawiam G w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->g = color;
 }
 
 void pixel_representation::B(const color_num color) noexcept
 {
     if( isNull() ) return;
-    log( { "ustawiam B w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
+//    log( { "ustawiam B w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->b = color;
 }
 
 void pixel_representation::A(const color_num color) noexcept
 {
     if( isNull() ) return;
-    log( { "ustawiam A w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
+//    log( { "ustawiam A w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->a = color;
 }
 
@@ -98,6 +98,16 @@ pixel_representation &pixel_representation::operator=(pixel_representation && px
     B(px.B());
     A(px.A());
     return *this;
+}
+
+void pixel_representation::operator()(const pixel_representation & src) noexcept
+{
+    __m_data.ptr = src.__m_data.ptr;
+}
+
+void pixel_representation::operator()(pixel_representation && src) noexcept
+{
+    __m_data.ptr = src.__m_data.ptr;
 }
 
 void pixel_representation::set(const RGB color) noexcept
@@ -155,11 +165,11 @@ point_representation::point_representation(coord_num x, coord_num y) noexcept
 {}
 
 point_representation::point_representation(const QPoint & src) noexcept
-    :__m_x( src.x() ), __m_y( src.y() )
+    :__m_x( static_cast<size_t>(src.x()) ), __m_y( static_cast<size_t>(src.y()) )
 {}
 
 point_representation::point_representation(QPoint && src) noexcept
-    :__m_x( src.x() ), __m_y( src.y() )
+    :__m_x( static_cast<size_t>(src.x()) ), __m_y( static_cast<size_t>(src.y()) )
 {}
 
 bool point_representation::isNull() const noexcept
@@ -186,11 +196,6 @@ bool operator<(const point_representation& src1, const point_representation& src
 {
     return  (src1.x() == src2.x() ? src1.y() < src2.y() : src1.x() < src2.x());
 }
-
-//bool operator==(const point_representation& src1, const point_representation& src2)
-//{
-//    return (src1.x() == src2.x()) && (src1.y() == src2.y());
-//}
 
 coord_num point_representation::x() const noexcept
 {
@@ -219,12 +224,27 @@ point_representation::operator QString() const noexcept
 
 point_representation::operator QPoint() const noexcept
 {
-    return QPoint( x(), y() );
+    return QPoint( static_cast<int>(x()), static_cast<int>(y()) );
 }
 
 RGB px_square::average() const noexcept
 {
     double med_r{0.0}, med_g{0.0}, med_b{0.0};
+    bool flag = false;
+    for(const auto& tab : data)
+    {
+        for(const auto& var : tab)
+            if(!var.isNull() && var.A() > 0)
+            {
+                med_r = var.R();
+                med_g = var.G();
+                med_b = var.B();
+                flag = true;
+                break;
+            }
+        if(flag) break;
+    }
+
     for(const auto& tab : data)
         for(const auto& var : tab)
             if(!var.isNull() && var.A() > 0)
@@ -233,7 +253,7 @@ RGB px_square::average() const noexcept
                 med_g = ( med_g + var.G() ) / 2.0;
                 med_b = ( med_b + var.B() ) / 2.0;
             }
-    return qRGB(med_r, med_g, med_b, 255);
+    return qRGB(static_cast<int>(med_r), static_cast<int>(med_g), static_cast<int>(med_b), 255);
 }
 
 bool px_square::isNull() const noexcept
@@ -249,11 +269,23 @@ px_square::px_square(const Izimage * parent, const pixel & px) noexcept
     :data{ { { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel } } }
 {
 //    if( parent == nullptr && (false || px.isNull()) ) return;
+    log({"central px:", parent->translate(px), QPTR(this)});
     const coord central = parent->translate(px);
     if(central == Izimage::null_coord) return;
-    for(int i = -1; i <= 1; i++)
-        for(int j = -1; j <= 1; j++)
-            data[1+j][1+i] = parent->get(central.x() + i, central.y() + j);
+    for(size_t i = 0; i < square_size; i++)
+        for(size_t j = 0; j < square_size; j++)
+        {
+            pixel ppx{parent->get(central.x() + ( i - 1 ), central.y() + ( j - 1 ))};
+            log({
+                    "px_square square creation:" ,
+                    parent->translate(ppx),
+                    QNUM((ppx.__m_data.ptr - parent->__m_data.get())),
+                    parent->translate(((ppx.__m_data.ptr - parent->__m_data.get()))),
+                    QNUM(parent->translate(parent->translate(ppx))),
+                    ppx
+                });
+            data[j][i](ppx);
+        }
 }
 
 pixel izimage_iterator::operator*() const noexcept

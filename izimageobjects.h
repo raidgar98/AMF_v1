@@ -7,7 +7,7 @@
 #include <array>
 
 //Own dependencies
-#include "utility.cpp"
+#include "utility.h"
 
 //usings
 using RGB = QRgb;
@@ -54,9 +54,9 @@ struct dummy_pointer
 struct raw_pixel
 {
     /// @variable Stands for RGBA values
-    color_num b;
-    color_num g;
     color_num r;
+    color_num g;
+    color_num b;
     color_num a;
 };
 using raw = raw_pixel;
@@ -118,6 +118,7 @@ private:
 
     friend class Izimage;
     friend struct izimage_iterator;
+    friend struct px_square;
 };
 using pixel = pixel_representation;
 

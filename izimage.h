@@ -84,8 +84,8 @@ public: //methodes
     coord translate(const pixel&)                       const noexcept;
 
     //iterators
-    izimage_iterator begin()                                    const noexcept;
-    izimage_iterator end()                                      const noexcept;
+    izimage_iterator begin()                            const noexcept;
+    izimage_iterator end()                              const noexcept;
 
     /// @brief this methode renders data, to be in more accessiable class - QImage
     void render(QImage& dst)                            const noexcept;
@@ -96,5 +96,6 @@ public: //methodes
 
 private: //methodes
 
+    friend struct px_square;
 
 };
