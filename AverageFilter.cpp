@@ -19,10 +19,5 @@ void AverageFilter::getFixedPicture(QImage& pic) const
 void AverageFilter::Correction()
 {
     for(const auto& var : broken_points)
-    {
-        log({"PUNKT:", var});
-        log({"PINKTY vol2", picture.translate(picture(var))});
         picture(var) = picture.get_square(picture(var)).average();
-        log({""});
-    }
 }

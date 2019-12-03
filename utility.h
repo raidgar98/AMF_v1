@@ -18,6 +18,8 @@ enum LOG_OPTION
 /// @note It works ONLY if DEBUG build type is active
 /// @example log( { "C++", ">", "C#,", QNUM(1000), "times on", QPTR(this), "object" }, LOG_OPTION::INFO);
 /// @example Output: "[INFO] C++ > C#, 1000 times on 0xBAADF00D object"
+///
+#include <iostream>
 inline void log(const QStringList& print_out, LOG_OPTION log_type = DEBUG)
 {
 #ifdef QT_DEBUG

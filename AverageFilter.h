@@ -17,6 +17,7 @@ private:
         NIE_USTAWIONO = -1,
         ZAPIS_JAKO_ZDJECIE = 0,
         ZAPIS_JAKO_MASKA_3D = 1
+
     }m_Param{ NIE_USTAWIONO };
 
     std::vector<coord> broken_points;

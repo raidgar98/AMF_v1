@@ -44,7 +44,7 @@ HEADERS += \
 	izimage.h \
 	izimageobjects.h \
         mainwindow.h \
-    utility.h
+        utility.h
 
 FORMS += \
         mainwindow.ui

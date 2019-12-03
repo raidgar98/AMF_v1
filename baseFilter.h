@@ -5,6 +5,8 @@
 
 //using namespace std;
 
+#pragma warning("zamienic na mape")
+
 template<typename T>
 using array_pointer_member = std::shared_ptr<T[]>;
 
@@ -21,6 +23,10 @@ protected:
     /// @variable mapa naprawionych pixeli
     /// @note później wymagana zmiana na tablice rzadką
     array_pointer<bool> fixedPixelMap;
+
+    /// @variable mapa uszkodzonych pixeli
+    /// @note później wymagana zmiana na tablice rzadką
+    array_pointer<bool> damagedPixelMap;
 
     /// @variable kontener zniszczonego obrazu
     Izimage picture;

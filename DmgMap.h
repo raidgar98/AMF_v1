@@ -1,7 +1,7 @@
 #pragma once
 #include <QImage>
 //#include <iostream>
-#include <QtDebug>
+#include <QDebug>
 #include <vector>
 
 #include "izimageobjects.h"
@@ -9,6 +9,7 @@
 class DmgMap
 {
 private:
+
     enum Color
     {
         R=0,

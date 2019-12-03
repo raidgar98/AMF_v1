@@ -26,39 +26,31 @@ color_num pixel_representation::B() const noexcept
 
 color_num pixel_representation::A() const noexcept
 {
-    if( isNull() )
-    {
-        log( { "NULL ", QPTR(this) } );
-        return Izimage::null_color;
-    }
+    if( isNull() ) return Izimage::null_color;
     return __m_data.ptr->a;
 }
 
 void pixel_representation::R(const color_num color) noexcept
 {
     if( isNull() ) return;
-//    log( { "ustawiam R w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->r = color;
 }
 
 void pixel_representation::G(const color_num color) noexcept
 {
     if( isNull() ) return;
-//    log( { "ustawiam G w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->g = color;
 }
 
 void pixel_representation::B(const color_num color) noexcept
 {
     if( isNull() ) return;
-//    log( { "ustawiam B w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->b = color;
 }
 
 void pixel_representation::A(const color_num color) noexcept
 {
     if( isNull() ) return;
-//    log( { "ustawiam A w ", QPTR(__m_data.ptr ), " na ", QNUM(color) } );
     __m_data.ptr->a = color;
 }
 
@@ -268,22 +260,12 @@ bool px_square::isNull() const noexcept
 px_square::px_square(const Izimage * parent, const pixel & px) noexcept
     :data{ { { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel }, { Izimage::null_pixel, Izimage::null_pixel, Izimage::null_pixel } } }
 {
-//    if( parent == nullptr && (false || px.isNull()) ) return;
-    log({"central px:", parent->translate(px), QPTR(this)});
     const coord central = parent->translate(px);
     if(central == Izimage::null_coord) return;
     for(size_t i = 0; i < square_size; i++)
         for(size_t j = 0; j < square_size; j++)
         {
             pixel ppx{parent->get(central.x() + ( i - 1 ), central.y() + ( j - 1 ))};
-            log({
-                    "px_square square creation:" ,
-                    parent->translate(ppx),
-                    QNUM((ppx.__m_data.ptr - parent->__m_data.get())),
-                    parent->translate(((ppx.__m_data.ptr - parent->__m_data.get()))),
-                    QNUM(parent->translate(parent->translate(ppx))),
-                    ppx
-                });
             data[j][i](ppx);
         }
 }
