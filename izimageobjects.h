@@ -6,6 +6,7 @@
 //STL libraries
 
 //Own dependencies
+#include <array>
 
 //usings
 using RGB = QRgb;

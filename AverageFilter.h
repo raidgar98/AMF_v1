@@ -22,7 +22,6 @@ private:
     std::set<coord> broken_points;
 
 public:
-
 AverageFilter() = delete;
 AverageFilter(std::set<coord> const &i_dmpmap, const QImage& i_image);
 
