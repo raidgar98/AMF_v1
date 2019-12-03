@@ -25,7 +25,6 @@ Izimage &Izimage::operator=(const QImage & src) noexcept
     __m_data.reset( new raw[max_range + 1] );
     memcpy(__m_data.get(), src.bits(), max_range * sizeof(raw));
     __m_data[max_range] = { 0, 0, 0, 0 };
-
     return *this;
 }
 
@@ -38,7 +37,6 @@ Izimage &Izimage::operator=(QImage && src) noexcept
     __m_data.reset( new raw[max_range + 1] );
     memcpy(__m_data.get(), src.bits(), max_range * sizeof(raw));
     __m_data[max_range] = { 0, 0, 0, 0 };
-
     return *this;
 }
 

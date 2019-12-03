@@ -1,3 +1,4 @@
+
 #pragma once
 
 //Own dependencies
@@ -8,6 +9,9 @@
 
 //STL libraries
 #include <memory>
+
+#include <array>
+
 
 //macros
 #define max_range __m_width*__m_height

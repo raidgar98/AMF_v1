@@ -7,7 +7,11 @@
 #include <array>
 
 //Own dependencies
+
 #include "utility.h"
+
+#include <array>
+
 
 //usings
 using RGB = QRgb;

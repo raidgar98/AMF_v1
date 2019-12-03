@@ -2,13 +2,13 @@
 
 //Qt libraries
 #include <QMainWindow>
-
-//STL libraries
+#include"DamageGenerator.h"
+//#include "filter_average.h"
+#include "DamageGenerator.h"
+#include "Quality.h"
 #include <memory>
 
-//Own dependencies
-#include "DamageGenerator.h"
-
+#include "secwindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,14 +30,15 @@ private slots:
     void on_btnDamage_clicked();
     void on_btnFix_clicked();
     void on_btnSave_clicked();
+	void on_btnQuality_clicked();
 
     /// @brief quick overload - on resize, picture resize althrough
     void resizeEvent(QResizeEvent* event) override;
 
-private:
 
-    /// @variable pointer to whole ui
+private:
     Ui::MainWindow *ui;
+    secWindow *secondwindow;
 
     /// @variable Images
     QImage SrcImage, DamagedImage, FixedImage, Map;
@@ -47,4 +48,6 @@ private:
 
 protected:
      DamageGenerator damage();
+
+
 };

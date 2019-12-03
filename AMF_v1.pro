@@ -27,23 +27,31 @@ CONFIG += c++17
 SOURCES += \
         AverageFilter.cpp \
         DamageGenerator.cpp \
+        Drawing.cpp \
+        Quality.cpp \
         baseFilter.cpp \
 	izimage.cpp \
 	izimageobjects.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    secwindow.cpp
 
 HEADERS += \
         AverageFilter.h \
         DamageGenerator.h \
+        DmgMap.h \
+        Drawing.h \
+        Quality.h \
         baseFilter.h \
 	izimage.h \
 	izimageobjects.h \
         mainwindow.h \
+        secwindow.h \
         utility.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        secwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

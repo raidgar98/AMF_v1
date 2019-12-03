@@ -7,6 +7,8 @@
 #include <QMessageBox>
 #include <QResizeEvent>
 
+
+
 #include "AverageFilter.h"
 
 
@@ -171,4 +173,16 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         ui->LblFixed->clear();
         ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
     }
+}
+
+void MainWindow::on_btnQuality_clicked()
+{
+    //secWindow qualityWindow;
+    //qualityWindow.setModal(true);
+    //qualityWindow.exec();
+
+    Quality quality(SrcImage,FixedImage,DamagedImage);
+    secondwindow = new secWindow(this,&quality);
+    secondwindow->show();
+
 }

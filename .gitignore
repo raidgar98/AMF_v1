@@ -14,3 +14,4 @@ Makefi*/
 *.bmp
 *.jpeg
 .qmake.stash
+tmp/
