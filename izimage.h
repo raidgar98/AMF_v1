@@ -52,16 +52,16 @@ private: //fields
 
 public: //methodes
 
-    /// @fn - no default / copy / move constructors, at all.
+    /// @brief - no default / copy / move constructors, at all.
     Izimage() =                                                delete;
     Izimage(const Izimage&) =                                  delete;
     Izimage(Izimage&&) =                                       delete;
 
-    /// @fn - theese constructors, will be used quite often
+    /// @brief - theese constructors, will be used quite often
     explicit Izimage(const QImage&)                           noexcept;
     explicit Izimage(QImage&&)                                noexcept;
 
-    /// @fn - operators, to make life easier
+    /// @brief - operators, to make life easier
     Izimage& operator=(const QImage&)                         noexcept;
     Izimage& operator=(QImage&&)                              noexcept;
 

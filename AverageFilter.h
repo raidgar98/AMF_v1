@@ -1,37 +1,32 @@
 #pragma once
+
+//Qt libraries
 #include <QImage>
-#include "DmgMap.h"
+
+//STL libraries
+
+//Own dependencies
 #include "baseFilter.h"
 
-#include <set>
-
-constexpr size_t NUM_PIX = 9;
-
+/// @brief Implementation of simple Average filter. In damaged pixel inserts average of neighbours
 class AverageFilter
         : public baseFilter
 {
-private:
-
-    enum
-    {
-        NIE_USTAWIONO = -1,
-        ZAPIS_JAKO_ZDJECIE = 0,
-        ZAPIS_JAKO_MASKA_3D = 1
-
-    }m_Param{ NIE_USTAWIONO };
-
-    std::vector<coord> broken_points;
-
 public:
 
-AverageFilter() = delete;
-AverageFilter(std::vector<coord> const &i_dmpmap, const QImage& i_image);
+    /// @brief no default constructor. That's nonsense
+    AverageFilter() = delete;
 
-void setObjectToFix(QImage i_Image) { takePicture(i_Image); }
-//void setMap(DmgMap &i_compareM) { m_compareMask = i_compareM; }
-void setParameters(const std::vector<double>& iParameters) override;
-void getFixedPicture(QImage& pic) const;
+    /// @brief only constructor
+    /// @param src - damaged image
+    /// @param damaged - collection of damaged pixels
+    AverageFilter(QImage const & src, const container& damaged) noexcept;
 
-virtual void Correction() override;
+    /// @brief this methode retrives picture, from depths
+    /// @param output param, to avoid unecessary copying.
+    void getFixedPicture(QImage& pic) const noexcept;
+
+    /// @brief implementation of Average Filter algorythm
+    virtual void Correction() override;
 
 };

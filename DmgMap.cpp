@@ -1,4 +1,5 @@
 #include "DmgMap.h"
+#include "izimage.h"
 
 DmgMap::DmgMap(QImage &i_raw, QImage &i_dmg)
     :m_raw{i_raw},m_dmg{i_dmg}
@@ -126,7 +127,7 @@ void DmgMap::makeMapImages()
         {
             int m_imageWidth=m_raw.width();
             int m_imageHeight=m_raw.height();
-            m_map=QImage(m_imageWidth,m_imageHeight,QImage::Format_RGBA8888);
+            m_map=QImage(m_imageWidth,m_imageHeight, default_format);
             m_map.fill(qRgba(0,0,0,255));
             for (int i=0;i<m_imageWidth;i++)
             {

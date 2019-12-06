@@ -1,26 +1,11 @@
 #include "baseFilter.h"
-#include <cstring>
-#include "utility.h"
 
-baseFilter::baseFilter(const QImage &src)
-    :picture{ src }
+baseFilter::baseFilter(const QImage &src, const container &damaged) noexcept
+    :picture{src}, missingPixels(damaged)
+{}
+
+void baseFilter::setFixedPixel(const coord &position, const bool state) noexcept
 {
-    fixedPixelMap.reset( new array_pointer_member<bool>[picture.width()] );
-    for(size_t i = 0; i < picture.width(); i++)
-        fixedPixelMap[i].reset( new bool[ picture.height() ] );
-}
-
-void baseFilter::setFixedPixel(const size_t xPixel, const size_t yPixel, const bool state)
-{
-    if (fixedPixelMap != nullptr && xPixel < picture.width() && yPixel < picture.height())
-        fixedPixelMap[xPixel][yPixel] = state;
-}
-
-void baseFilter::takePicture(const QImage &src)
-{
-    picture = src;
-
-    fixedPixelMap.reset( new array_pointer_member<bool>[picture.width()] );
-    for(size_t i = 0; i < picture.width(); i++)
-        fixedPixelMap[i].reset( new bool[ picture.height() ] );
+    missingPixels[position] = state;
+    restoredPixels[position] = state;
 }

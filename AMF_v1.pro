@@ -27,7 +27,6 @@ CONFIG += c++17
 SOURCES += \
         AverageFilter.cpp \
         DamageGenerator.cpp \
-        DmgMap.cpp \
         baseFilter.cpp \
 #        damagekasia.cpp \
 	izimage.cpp \
@@ -38,7 +37,6 @@ SOURCES += \
 HEADERS += \
         AverageFilter.h \
         DamageGenerator.h \
-        DmgMap.h \
         baseFilter.h \
 #        damagekasia.h \
 	izimage.h \

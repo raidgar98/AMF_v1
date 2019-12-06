@@ -14,12 +14,10 @@ enum LOG_OPTION
     INFO = 7
 };
 
-/// @fn Logs 'print_out' varriable separarated with ingle space, with LOG_OPTION prefix (by default DEBUG).
+/// @brief Logs 'print_out' varriable separarated with ingle space, with LOG_OPTION prefix (by default DEBUG).
 /// @note It works ONLY if DEBUG build type is active
 /// @example log( { "C++", ">", "C#,", QNUM(1000), "times on", QPTR(this), "object" }, LOG_OPTION::INFO);
 /// @example Output: "[INFO] C++ > C#, 1000 times on 0xBAADF00D object"
-///
-#include <iostream>
 inline void log(const QStringList& print_out, LOG_OPTION log_type = DEBUG)
 {
 #ifdef QT_DEBUG

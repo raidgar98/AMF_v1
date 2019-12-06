@@ -1,63 +1,53 @@
 #pragma once
 
-#include<vector>
+//Qt libraries
+
+//STL libraries
+#include <map>
+
+//Own dependencies
 #include "izimage.h"
 
-//using namespace std;
+/// @note will be replaced to Patrick's RareMatrix
+/// @param coord: coordination
+/// @param bool: if set true it's restored, otherwise missing
+using container = std::map<coord, bool>;
 
-#pragma warning("zamienic na mape")
-
-template<typename T>
-using array_pointer_member = std::shared_ptr<T[]>;
-
-template<typename T>
-using array_pointer = std::shared_ptr<array_pointer_member<T>[]>;
-
-/// @brief klasa bazowa dla przyszłych filtrów
-/// @note w klasach pochodnych trzeba dodać gettery do dodanych parametrów
-/// @note parametry potrzebne konkretnemu filtrowi trzeba dopisać w klasach dziedziczących
+/// @brief base class for further filters
 class baseFilter
 {
 protected:
 
-    /// @variable mapa naprawionych pixeli
-    /// @note później wymagana zmiana na tablice rzadką
-    array_pointer<bool> fixedPixelMap;
+    /// @variable Stores restored pixels
+    container restoredPixels;
 
-    /// @variable mapa uszkodzonych pixeli
-    /// @note później wymagana zmiana na tablice rzadką
-    array_pointer<bool> damagedPixelMap;
+    /// @variable Stores missing pixels
+    /// @note why not squash with above, hmmm?
+    container missingPixels;
 
-    /// @variable kontener zniszczonego obrazu
+    /// @variable Picture here, will be repaired
     Izimage picture;
 
 public:
 
-    /// @brief wirtualny destruktor
-    explicit baseFilter(const QImage& src);
+    /// @brief only avaiable constructor
+    /// @param src: destroyed image, this image will be repaired
+    /// @param damaged: key-value container, that stores missing pixels
+    explicit baseFilter(const QImage& src, const container& damaged) noexcept;
+
+    /// @brief virtual destructor
     virtual ~baseFilter() = default;
 
-    /// @brief ustawianie parametrów jest za pomocą wektora, w klasach pochodnych trzeba zdefiniować, która z jego składowych będzie wypełniała dany parametr
-    /// @param iParameters - zadane parametry
-    virtual void setParameters(const std::vector<double>& iParameters) = 0;
-
-    /// @brief zaznacza na mapie naprawione pixele
+    /// @brief sets,
     /// @param xPixel, yPixel - współżędne
-    void setFixedPixel(const size_t xPixel, const size_t yPixel, const bool state);
+    void setFixedPixel(const coord& position, const bool state = true) noexcept;
 
-    /// @brief zwraca wskaźnik do mapy z naprawionymi pixelami
-    /// @returns wskaźnik na tablicę naprawionych pikseli
-    const array_pointer<bool>& getFixedPixel() const { return fixedPixelMap; }
+    /// @brief return const reference to fixed pixels container, simole getter
+    const container& getRestoredPixel() const { return restoredPixels; }
 
-    /// @brief pobiera obrazek do naprawy
-    /// @param tabRGB - wskaźnik na tablicę pixeli (RGB)
-    /// @param iHeight, iLength - wymiary obrazka
-    void takePicture(const QImage& src);
+    /// @brief returns const reference to picture
+    const Izimage& returnPicture() const { return picture; }
 
-    /// @brief zwraca przyjęty obraz
-    /// @returns wskaźnik na obraz
-    const Izimage& returnFixedPicture() const { return picture; }
-
-    /// @brief miejsce na algorytm naprawiający obraz
+    /// @brief in this methode derrived classes defines their repairment algorythm
     virtual void Correction() = 0;
 };

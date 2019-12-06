@@ -3,3 +3,14 @@ build/
 *.user
 *.o
 moc_*
+user*local*
+release/
+build/
+debug/
+Makefi*
+Makefi*/
+*.png
+*.jpg
+*.bmp
+*.jpeg
+.qmake.stash

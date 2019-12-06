@@ -64,9 +64,9 @@ public:
     QLabel *label_7;
     QLabel *LblFixed;
     QLabel *label_5;
-    QLabel *LblMap;
     QLabel *label_6;
     QLabel *label_8;
+    QLabel *LblMap;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -1573,9 +1573,10 @@ public:
 
         gridLayout->addWidget(label_5, 0, 0, 1, 1);
 
-        LblMap = new QLabel(frame_2);
-        LblMap->setObjectName(QString::fromUtf8("LblMap"));
-        LblMap->setMinimumSize(QSize(300, 200));
+        label_6 = new QLabel(frame_2);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setMinimumSize(QSize(0, 0));
+        label_6->setMaximumSize(QSize(16777215, 25));
         QPalette palette22;
         palette22.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette22.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1631,17 +1632,14 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette22.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        LblMap->setPalette(palette22);
-        LblMap->setAutoFillBackground(true);
-        LblMap->setFrameShape(QFrame::NoFrame);
-        LblMap->setAlignment(Qt::AlignCenter);
+        label_6->setPalette(palette22);
 
-        gridLayout->addWidget(LblMap, 1, 1, 1, 1);
+        gridLayout->addWidget(label_6, 2, 0, 1, 1);
 
-        label_6 = new QLabel(frame_2);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setMinimumSize(QSize(0, 0));
-        label_6->setMaximumSize(QSize(16777215, 25));
+        label_8 = new QLabel(frame_2);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setMinimumSize(QSize(0, 0));
+        label_8->setMaximumSize(QSize(16777215, 25));
         QPalette palette23;
         palette23.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette23.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1697,14 +1695,13 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette23.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_6->setPalette(palette23);
+        label_8->setPalette(palette23);
 
-        gridLayout->addWidget(label_6, 2, 0, 1, 1);
+        gridLayout->addWidget(label_8, 0, 1, 1, 1);
 
-        label_8 = new QLabel(frame_2);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setMinimumSize(QSize(0, 0));
-        label_8->setMaximumSize(QSize(16777215, 25));
+        LblMap = new QLabel(frame_2);
+        LblMap->setObjectName(QString::fromUtf8("LblMap"));
+        LblMap->setMinimumSize(QSize(300, 200));
         QPalette palette24;
         palette24.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette24.setBrush(QPalette::Active, QPalette::Button, brush8);
@@ -1760,9 +1757,12 @@ public:
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette24.setBrush(QPalette::Disabled, QPalette::PlaceholderText, brush7);
 #endif
-        label_8->setPalette(palette24);
+        LblMap->setPalette(palette24);
+        LblMap->setAutoFillBackground(true);
+        LblMap->setFrameShape(QFrame::NoFrame);
+        LblMap->setAlignment(Qt::AlignCenter);
 
-        gridLayout->addWidget(label_8, 0, 1, 1, 1);
+        gridLayout->addWidget(LblMap, 1, 1, 1, 1);
 
 
         gridLayout_2->addWidget(frame_2, 0, 1, 1, 1);
@@ -1800,9 +1800,9 @@ public:
         label_7->setText(QApplication::translate("MainWindow", "Fixed Image", nullptr));
         LblFixed->setText(QString());
         label_5->setText(QApplication::translate("MainWindow", "Source Image", nullptr));
-        LblMap->setText(QString());
         label_6->setText(QApplication::translate("MainWindow", "Destroyed Image", nullptr));
         label_8->setText(QApplication::translate("MainWindow", "Map Image", nullptr));
+        LblMap->setText(QString());
     } // retranslateUi
 
 };

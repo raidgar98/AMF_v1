@@ -1,46 +1,57 @@
 #include "DamageGenerator.h"
-#include <cstdlib>
-//#include<iostream>
-//using namespace std;
 
-damageDistansKind DamageGenerator::kindOfDamage = damageDistansKind::euclidean;
+#include <functional>
+#include <random>
 
-DamageGenerator::DamageGenerator()
+void DamageGenerator::makeDamage(QImage &dst, container& missing_ones, const size_t number_of_damages, const size_t damage_size) noexcept
 {
-}
+    std::random_device engine;
 
+    std::uniform_int_distribution<coord_num> width  (0, static_cast<coord_num>(dst.width()  ));
+    std::uniform_int_distribution<coord_num> height (0, static_cast<coord_num>(dst.height() ));
 
-DamageGenerator::~DamageGenerator()
-{
-}
-
-
-
-void DamageGenerator::makeDamage(const QImage& src, QImage& dst, size_t iDamageStartNumber, int iPixelDamageNumber)
-{
-    std::mt19937_64 randomGenerator;
-    int xCenter;
-    int yCenter;
-    int xAktual;
-    int yAktual;
-    uniform_int_distribution<int> uIntDistX(0, src.width());
-    uniform_int_distribution<int> uIntDistY(0, src.height());
-
-    for (size_t i = 0; i < iDamageStartNumber; i++)
+    std::function<void(const int, const std::function<coord()> , const std::function<bool(const coord &)> &)> damager;
+    std::function<bool(const coord&)> make_damage = [&](const coord& pos)
     {
-        xCenter = uIntDistX(randomGenerator);
-        yCenter = uIntDistY(randomGenerator);
+        if(pos.x() >= static_cast<coord_num>(dst.width()) || pos.y() >= static_cast<coord_num>(dst.height())) return false;
+        dst.setPixel(pos, Qt::transparent);
+        missing_ones[pos] = false;
+        return true;
+    };
+    std::function<coord()> generate_random_coordination = [&]()
+    {
+        return coord{ width(engine), height(engine) };
+    };
 
-        for(int j = -1 * (iPixelDamageNumber); j <= iPixelDamageNumber; j++)
-            for(int k = -1 * (iPixelDamageNumber); k <= iPixelDamageNumber; k++)
-            {
-                xAktual = xCenter + j;
-                yAktual = yCenter + k;
-                if(xAktual < 0 || yAktual < 0) continue;
-                if(xAktual >= src.width() || yAktual >= src.height()) continue;
-
-                dst.setPixel(xAktual, yAktual, qRgba(0,0,0,0));
-            }
-
+    switch(current_damage_kind)
+    {
+        case euclidean: damager = &DamageGenerator::euclidean_generator; break;
+        case chaos: damager = &DamageGenerator::chaos_generator; break;
+        default: damager = &DamageGenerator::euclidean_generator; break;
     }
+
+    for(size_t i = 0; i < number_of_damages; i++)
+        damager(damage_size, generate_random_coordination, make_damage);
+
+}
+
+void DamageGenerator::renderMapFromRawData(const container &input, QImage& output) noexcept
+{
+    output.fill(qRgba(0,0,0,255));
+    for(const auto& var : input)
+        output.setPixel(var.first, qRgba(255,255,255,255));
+}
+
+void DamageGenerator::euclidean_generator(const int dmg_size, const std::function<coord()>& gen, const std::function<bool(const coord &)> &make_damage) noexcept
+{
+    const coord pos = gen();
+    for(int i = -(dmg_size/2); i < (dmg_size/2); i++)
+        for(int j = -(dmg_size/2); j < (dmg_size/2); j++)
+            make_damage({pos.x() + i, pos.y() + j});
+}
+
+void DamageGenerator::chaos_generator(const int dmg_size, const std::function<coord ()> &gen, const std::function<bool (const coord &)> &make_damage) noexcept
+{
+    for(int i = 0; i < dmg_size; i++)
+        make_damage(gen());
 }

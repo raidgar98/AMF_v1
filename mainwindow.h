@@ -1,14 +1,13 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
+//Qt libraries
 #include <QMainWindow>
-#include"DamageGenerator.h"
-//#include "filter_average.h"
-#include "DamageGenerator.h"
-#include "DmgMap.h"
 
+//STL libraries
 #include <memory>
 
+//Own dependencies
+#include "DamageGenerator.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -20,28 +19,33 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
+
+    /// @brief on click events. Self describing...
     void on_BtnLoad_clicked();
-
     void on_btnDamage_clicked();
-
     void on_btnFix_clicked();
     void setDamageLbl();
     void on_btnSave_clicked();
 
+    /// @brief quick overload - on resize, picture resize althrough
+    void resizeEvent(QResizeEvent* event) override;
+
 private:
+
+    /// @variable pointer to whole ui
     Ui::MainWindow *ui;
-    QImage SrcImage;
 
-    std::unique_ptr<DmgMap> map;
+    /// @variable Images
+    QImage SrcImage, DamagedImage, FixedImage, Map;
 
-    QImage DamagedImage, FixedImage, Map;
-
+    /// @variable storage of missed pixels
+    container damaged_points;
 
 protected:
      DamageGenerator damage();
 };
-#endif // MAINWINDOW_H

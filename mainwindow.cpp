@@ -5,6 +5,7 @@
 #include "QStandardPaths"
 #include "QImage"
 #include <QMessageBox>
+#include <QResizeEvent>
 
 #include "AverageFilter.h"
 
@@ -36,43 +37,41 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_BtnLoad_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Image"), "/home/raidg", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
+    QString fileName = QFileDialog::getOpenFileName(
+                this,
+                tr("Open Image"),
+                QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+                tr("Image Files (*.png *.jpg *.bmp *.jpeg)")
+                );
+
     SrcImage.load(fileName);
-    SrcImage = SrcImage.convertToFormat(QImage::Format_RGBA8888);
+    SrcImage = SrcImage.convertToFormat(default_format);
 
+    ui->LblSource->clear();
     ui->LblSource->setPixmap(QPixmap::fromImage(SrcImage.scaled(ui->LblSource->width(), ui->LblSource->height(), Qt::KeepAspectRatio )));
-    ui->LblFixed->clear();
-    ui->LblDamaged->clear();
-    ui->LblMap->clear();
-
 }
 
-void MainWindow::on_btnDamage_clicked() //dodac ograniczenie, jesli do zniszczenia więcej niż 100% obrazu
+#pragma warning("dodac ograniczenie, jesli do zniszczenia więcej niż 100% obrazu")
+void MainWindow::on_btnDamage_clicked()
 {
     if(SrcImage.isNull())
-    {
-        QMessageBox msg(QMessageBox::Icon::NoIcon, "Warning", "Load the source image");
-        msg.exec();
-    }
+        QMessageBox(QMessageBox::Icon::NoIcon, "Warning", "Load the source image").exec();
     else
     {
         int SizeOfDamage=ui->SpinDamSize->value();
         int NumOfDamages=ui->SpinDamNum->value();
 
         DamagedImage = SrcImage;
+        Map = QImage(SrcImage.size(), default_format);
 
-        DamageGenerator::makeDamage(SrcImage, DamagedImage, NumOfDamages, SizeOfDamage);
+        DamageGenerator::makeDamage(DamagedImage, damaged_points, NumOfDamages, SizeOfDamage);
+        DamageGenerator::renderMapFromRawData(damaged_points, Map);
 
-        ui->LblFixed->clear();
+        ui->LblMap->clear();
         ui->LblDamaged->clear();
 
-        map.reset(new DmgMap(SrcImage, DamagedImage));
-
-        map->makeMapImages();
-        Map=map->getMap();
-
         ui->LblMap->setPixmap(QPixmap::fromImage(Map.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
-        ui->LblDamaged->setPixmap(QPixmap::fromImage(DamagedImage.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
+        ui->LblDamaged->setPixmap(QPixmap::fromImage(DamagedImage.scaled(ui->LblDamaged->width(), ui->LblDamaged->height(), Qt::KeepAspectRatio)));
     }
 
 }
@@ -81,15 +80,12 @@ void MainWindow::on_btnFix_clicked()
 {
 
     if(DamagedImage.isNull())
-    {
-        QMessageBox msg(QMessageBox::Icon::NoIcon, "Warning", "No image to fix");
-        msg.exec();
-    }
+        QMessageBox(QMessageBox::Icon::NoIcon, "Warning", "No image to fix").exec();
     else
     {
         if(ui->AverageRBtn->isChecked())
         {
-            AverageFilter av(map->get_points(), map->getDmg());
+            AverageFilter av(DamagedImage, damaged_points);
             av.Correction();
             av.getFixedPicture(FixedImage);
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
@@ -158,4 +154,33 @@ void MainWindow::on_btnSave_clicked()
 
     }
 
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+
+    if(!SrcImage.isNull())
+    {
+        ui->LblSource->clear();
+        ui->LblSource->setPixmap(QPixmap::fromImage(SrcImage.scaled(ui->LblSource->width(), ui->LblSource->height(), Qt::KeepAspectRatio )));
+    }
+
+    if(!DamagedImage.isNull())
+    {
+        ui->LblDamaged->clear();
+        ui->LblDamaged->setPixmap(QPixmap::fromImage(DamagedImage.scaled(ui->LblDamaged->width(), ui->LblDamaged->height(), Qt::KeepAspectRatio)));
+    }
+
+    if(!Map.isNull())
+    {
+        ui->LblMap->clear();
+        ui->LblMap->setPixmap(QPixmap::fromImage(Map.scaled(ui->LblMap->width(), ui->LblMap->height(), Qt::KeepAspectRatio)));
+    }
+
+    if(!FixedImage.isNull())
+    {
+        ui->LblFixed->clear();
+        ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
+    }
 }

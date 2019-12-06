@@ -1,23 +1,20 @@
 #include "AverageFilter.h"
 #include "utility.h"
 
-AverageFilter::AverageFilter(std::vector<coord> const &i_dmpmap, QImage const & src)
-    :baseFilter (src), broken_points{i_dmpmap}
+AverageFilter::AverageFilter(QImage const & src, const container& damaged) noexcept
+    :baseFilter (src, damaged)
 {}
 
-void AverageFilter::setParameters(const std::vector<double> & iParameters)
-{
-//    if( ( iParameters.size() == 1 && iParameters.at(0) == 1.0) || iParameters.at(0) == 0.0 )
-    //        m_Param = iParameters.at(0);
-}
-
-void AverageFilter::getFixedPicture(QImage& pic) const
+void AverageFilter::getFixedPicture(QImage& pic) const noexcept
 {
     picture.render(pic);
 }
 
 void AverageFilter::Correction()
 {
-    for(const auto& var : broken_points)
-        picture(var) = picture.get_square(picture(var)).average();
+    for(auto& var : missingPixels)
+    {
+        picture(var.first) = picture.get_square(picture(var.first)).average();
+        setFixedPixel(var.first, true);
+    }
 }
