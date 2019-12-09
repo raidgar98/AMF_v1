@@ -15,25 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->SliderDamNum, SIGNAL (valueChanged(int)), SLOT (setDamageLbl()));
-    connect(ui->SpinerDamSize, SIGNAL (valueChanged(int)), SLOT (setDamageLbl()));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
- void MainWindow::setDamageLbl()
- {
-    if(!SrcImage.isNull())
-    {
-        double l=ui->SpinDamNum->value()*ui->SpinDamSize->value()*ui->SpinDamSize->value();
-        double m=(SrcImage.width()*SrcImage.height());
-        double x=l/m*100.0;
-        ui->DamageLbl->setNum(x);
-    }
- }
 
 void MainWindow::on_BtnLoad_clicked()
 {
@@ -63,6 +50,7 @@ void MainWindow::on_btnDamage_clicked()
 
         DamagedImage = SrcImage;
         Map = QImage(SrcImage.size(), default_format);
+        damaged_points.clear();
 
         DamageGenerator::makeDamage(DamagedImage, damaged_points, NumOfDamages, SizeOfDamage);
         DamageGenerator::renderMapFromRawData(damaged_points, Map);
