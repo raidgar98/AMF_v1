@@ -1,0 +1,9 @@
+Project1.vcxproj
+Project1.vcxproj.filters
+Project1.vcxproj.user
+Shared.cpp
+Shared.h
+TestRareMatrix.cpp
+TestRareMatrix.h
+Debug/
+main.cpp
