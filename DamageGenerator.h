@@ -28,12 +28,12 @@ public:
     /// @param missing_ones - also output parameter. container with modified coordinates
     /// @param number_of_damages - defines how many times damage should be executed
     /// @param damage_size - how big single damage should be
-    static void makeDamage(QImage& dst, container& missing_ones, const size_t number_of_damages, const size_t damage_size) noexcept;
+    static void makeDamage(QImage& dst, container<bool>& missing_ones, const size_t number_of_damages, const size_t damage_size) noexcept;
 
     /// @brief This methode render visual representation of given damage
     /// @param input - container with already damaged coordinates
     /// @param output - output parameter, white mean missing, black mean normal ones
-    static void renderMapFromRawData(const container& input, QImage& output) noexcept;
+    static void renderMapFromRawData(const container<bool>& input, QImage& output) noexcept;
 
     /// @brief Simple setter
     static void setKindOfDamage(const damage_kinds iKindOfDamage) noexcept { current_damage_kind = iKindOfDamage; }

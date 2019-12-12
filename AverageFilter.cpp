@@ -1,7 +1,7 @@
 #include "AverageFilter.h"
 #include "utility.h"
 
-AverageFilter::AverageFilter(QImage const & src, const container& damaged) noexcept
+AverageFilter::AverageFilter(QImage const & src, const container<bool>& damaged) noexcept
     :baseFilter (src, damaged)
 {}
 

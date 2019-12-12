@@ -20,7 +20,7 @@ public:
     /// @brief only constructor
     /// @param src - damaged image
     /// @param damaged - collection of damaged pixels
-    AverageFilter(QImage const & src, const container& damaged) noexcept;
+    AverageFilter(QImage const & src, const container<bool>& damaged) noexcept;
 
     /// @brief this methode retrives picture, from depths
     /// @param output param, to avoid unecessary copying.

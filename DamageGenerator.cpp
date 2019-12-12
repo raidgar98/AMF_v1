@@ -3,7 +3,7 @@
 #include <functional>
 #include <random>
 
-void DamageGenerator::makeDamage(QImage &dst, container& missing_ones, const size_t number_of_damages, const size_t damage_size) noexcept
+void DamageGenerator::makeDamage(QImage &dst, container<bool>& missing_ones, const size_t number_of_damages, const size_t damage_size) noexcept
 {
     std::random_device engine;
 
@@ -35,7 +35,7 @@ void DamageGenerator::makeDamage(QImage &dst, container& missing_ones, const siz
 
 }
 
-void DamageGenerator::renderMapFromRawData(const container &input, QImage& output) noexcept
+void DamageGenerator::renderMapFromRawData(const container<bool>& input, QImage& output) noexcept
 {
     output.fill(qRgba(0,0,0,255));
     for(const auto& var : input)

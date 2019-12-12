@@ -50,10 +50,10 @@ void MainWindow::on_btnDamage_clicked()
 
         DamagedImage = SrcImage;
         Map = QImage(SrcImage.size(), default_format);
-        damaged_points.clear();
+        damaged_points.reset(new RareMatrix<bool>(SrcImage.width(), SrcImage.height()));
 
-        DamageGenerator::makeDamage(DamagedImage, damaged_points, NumOfDamages, SizeOfDamage);
-        DamageGenerator::renderMapFromRawData(damaged_points, Map);
+        DamageGenerator::makeDamage(DamagedImage, *damaged_points, NumOfDamages, SizeOfDamage);
+        DamageGenerator::renderMapFromRawData(*damaged_points, Map);
 
         ui->LblMap->clear();
         ui->LblDamaged->clear();
@@ -73,7 +73,7 @@ void MainWindow::on_btnFix_clicked()
     {
         if(ui->AverageRBtn->isChecked())
         {
-            AverageFilter av(DamagedImage, damaged_points);
+            AverageFilter av(DamagedImage, *damaged_points);
             av.Correction();
             av.getFixedPicture(FixedImage);
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));

@@ -4,6 +4,7 @@
 
 #define QNUM(x) QString::number(x)
 #define QPTR(x) QNUM(reinterpret_cast<unsigned long long>(x))
+#define THROW( except, msg ) try{ throw except(msg); }catch(const except&) { throw; }
 
 /// @enum Simple enum, for simple log function
 enum LOG_OPTION

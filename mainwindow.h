@@ -43,7 +43,7 @@ private:
     QImage SrcImage, DamagedImage, FixedImage, Map;
 
     /// @variable storage of missed pixels
-    container damaged_points;
+    std::unique_ptr<container<bool>> damaged_points;
 
 protected:
      DamageGenerator damage();
