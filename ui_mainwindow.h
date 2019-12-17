@@ -45,6 +45,7 @@ public:
     QSlider *SliderDamNum;
     QVBoxLayout *verticalLayout_3;
     QLabel *label_3;
+    QRadioButton *MedianRBtn;
     QRadioButton *AverageRBtn;
     QVBoxLayout *verticalLayout;
     QLabel *label_4;
@@ -262,9 +263,15 @@ public:
 
         verticalLayout_3->addWidget(label_3);
 
+        MedianRBtn = new QRadioButton(menu);
+        MedianRBtn->setObjectName(QString::fromUtf8("MedianRBtn"));
+        MedianRBtn->setChecked(true);
+
+        verticalLayout_3->addWidget(MedianRBtn);
+
         AverageRBtn = new QRadioButton(menu);
         AverageRBtn->setObjectName(QString::fromUtf8("AverageRBtn"));
-        AverageRBtn->setChecked(true);
+        AverageRBtn->setChecked(false);
 
         verticalLayout_3->addWidget(AverageRBtn);
 
@@ -470,6 +477,7 @@ public:
         label->setText(QApplication::translate("MainWindow", "Damages Size", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Num of Damage", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Select Filter", nullptr));
+        MedianRBtn->setText(QApplication::translate("MainWindow", "Median Filter", nullptr));
         AverageRBtn->setText(QApplication::translate("MainWindow", "Average Filter", nullptr));
         label_4->setText(QApplication::translate("MainWindow", "Save", nullptr));
         DestroyedCBox->setText(QApplication::translate("MainWindow", "Destroyed Image", nullptr));

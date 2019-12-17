@@ -5,11 +5,6 @@ AverageFilter::AverageFilter(QImage const & src, const container& damaged) noexc
     :baseFilter (src, damaged)
 {}
 
-void AverageFilter::getFixedPicture(QImage& pic) const noexcept
-{
-    picture.render(pic);
-}
-
 void AverageFilter::Correction()
 {
     for(auto& var : missingPixels)

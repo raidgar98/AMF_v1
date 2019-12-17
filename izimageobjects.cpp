@@ -1,6 +1,8 @@
 #include "izimageobjects.h"
 #include "izimage.h"
 
+#include <cmath>
+
 bool pixel_representation::isNull() const noexcept
 {
     return ( __m_data.ptr == Izimage::null_pixel.__m_data.ptr );
@@ -100,6 +102,15 @@ void pixel_representation::operator()(const pixel_representation & src) noexcept
 void pixel_representation::operator()(pixel_representation && src) noexcept
 {
     __m_data.ptr = src.__m_data.ptr;
+}
+
+real pixel_representation::get_RGB_distance(const pixel_representation &px) const noexcept
+{
+    if( px.__m_data.ptr == __m_data.ptr ) return 0.0;
+    if( isNull() || px.isNull() ) return 442.0; // not sure here. maybe 442.0 (max distance) should be returned, hmmm?
+    if( isNull() || px.isNull() ) return std::numeric_limits<real>::max();
+    const auto d = [](const color_num x){ return static_cast<real>(x); };
+    return std::sqrt(std::pow(d(R() - px.R()), 2.0) + std::pow(d(G() - px.G()), 2.0) + std::pow(d(B() - px.B()), 2.0));
 }
 
 void pixel_representation::set(const RGB color) noexcept
@@ -255,6 +266,16 @@ bool px_square::isNull() const noexcept
         for(const auto& var : tab)
             if(!var.isNull()) return false;
     return true;
+}
+
+px_square::array_it px_square::begin() noexcept
+{
+    return data.begin();
+}
+
+px_square::array_it px_square::end() noexcept
+{
+    return data.end();
 }
 
 px_square::px_square(const Izimage * parent, const pixel & px) noexcept

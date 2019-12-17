@@ -11,10 +11,6 @@
 
 //usings
 using RGB = QRgb;
-using size_type = size_t;
-using coord_num = unsigned long long int;
-using idx = coord_num;
-using color_num = unsigned char;
 
 //macros
 #define qRGB( r, g, b, a) qRgba(r, g, b, a)
@@ -108,6 +104,9 @@ struct pixel_representation
     /// @brief defined for Debug purpose
     operator QString()                                                  const noexcept;
 
+    /// @brief counts distance in 3-dimensional (RGB) space between pixels
+    real get_RGB_distance(const pixel_representation& px)               const noexcept;
+
 private:
 
     /// @variable holds pointer to single structer in parent Izimage
@@ -166,6 +165,8 @@ using coord = point_representation;
 /// @brief represents square, 9-pixel, part of image
 struct px_square
 {
+    using array_it = decltype(((std::array<std::array<pixel, square_size>, square_size>*)nullptr)->end());
+
     /// @brief Theese constructors guarantee, that only Izimage can create 'fresh' object
     px_square(const px_square&) =                                              default;
     px_square(px_square&&) =                                                   default;
@@ -177,6 +178,11 @@ struct px_square
 
     /// @brief This methode checks is there at least one not null pixel
     bool isNull()                                                        const noexcept;
+
+    /// @brief Iterator proxy methodes
+    array_it begin()                                                           noexcept;
+    array_it end()                                                             noexcept;
+
 
 private:
 

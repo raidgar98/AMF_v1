@@ -5,6 +5,12 @@
 #define QNUM(x) QString::number(x)
 #define QPTR(x) QNUM(reinterpret_cast<unsigned long long>(x))
 
+using size_type = size_t;
+using coord_num = unsigned long long int;
+using idx = coord_num;
+using color_num = unsigned char;
+using real = double;
+
 /// @enum Simple enum, for simple log function
 enum LOG_OPTION
 {

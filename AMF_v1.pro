@@ -31,7 +31,8 @@ SOURCES += \
 	izimage.cpp \
 	izimageobjects.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+	vectormedianfilter.cpp
 
 HEADERS += \
         AverageFilter.h \
@@ -40,7 +41,8 @@ HEADERS += \
 	izimage.h \
 	izimageobjects.h \
         mainwindow.h \
-        utility.h
+        utility.h \
+	vectormedianfilter.h
 
 FORMS += \
         mainwindow.ui

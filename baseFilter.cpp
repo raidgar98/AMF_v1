@@ -9,3 +9,8 @@ void baseFilter::setFixedPixel(const coord &position, const bool state) noexcept
     missingPixels[position] = state;
     restoredPixels[position] = state;
 }
+
+void baseFilter::getFixedPicture(QImage &ret) const noexcept
+{
+    picture.render(ret);
+}

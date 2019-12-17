@@ -39,7 +39,7 @@ public:
     virtual ~baseFilter() = default;
 
     /// @brief sets,
-    /// @param xPixel, yPixel - współżędne
+    /// @param xPixel, yPixel - coordinations
     void setFixedPixel(const coord& position, const bool state = true) noexcept;
 
     /// @brief return const reference to fixed pixels container, simole getter
@@ -47,6 +47,10 @@ public:
 
     /// @brief returns const reference to picture
     const Izimage& returnPicture() const { return picture; }
+
+    /// @brief returns by param QImage
+    /// @param ret - here result will be written
+    void getFixedPicture(QImage& ret) const noexcept;
 
     /// @brief in this methode derrived classes defines their repairment algorythm
     virtual void Correction() = 0;

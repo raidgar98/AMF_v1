@@ -8,6 +8,7 @@
 #include <QResizeEvent>
 
 #include "AverageFilter.h"
+#include "vectormedianfilter.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -76,6 +77,13 @@ void MainWindow::on_btnFix_clicked()
             AverageFilter av(DamagedImage, damaged_points);
             av.Correction();
             av.getFixedPicture(FixedImage);
+            ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
+        }
+        else if(ui->MedianRBtn->isChecked())
+        {
+            VectorMedianFilter mv(DamagedImage, damaged_points);
+            mv.Correction();
+            mv.getFixedPicture(FixedImage);
             ui->LblFixed->setPixmap(QPixmap::fromImage(FixedImage.scaled(ui->LblFixed->width(), ui->LblFixed->height(), Qt::KeepAspectRatio)));
         }
         else
