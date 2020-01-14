@@ -31,6 +31,7 @@ private slots:
     void on_btnDamage_clicked();
     void on_btnFix_clicked();
     void on_btnSave_clicked();
+	void setDamageLbl();
 
     /// @brief quick overload - on resize, picture resize althrough
     void resizeEvent(QResizeEvent* event) override;

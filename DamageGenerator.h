@@ -16,20 +16,21 @@ public:
     enum damage_kinds
     {
         euclidean,      /// @var squares
-        manhattan,      /// @var ?
 		chaos,          /// @var dots
 		snowflakes,		/// @var snowflakes
-		clouds			///	@var clouds
-
+		clouds,			///	@var clouds
+		scratch,			/// @var scratches
+		diamond
     };
 
 	inline static const std::map<	const char*, damage_kinds > enum_strings{
 		{
 			{ "Euclidean",	euclidean	},
-			{ "Manhattan",	manhattan	},
 			{ "Chaos",		chaos		},
 			{ "Snowflake",	snowflakes	},
-			{ "Cloud",		clouds		}
+			{ "Cloud",		clouds		},
+			{ "Scratch",	scratch		},
+			{ "Scratch",	scratch		},
 		}
 	};
 
@@ -62,6 +63,7 @@ private:
 
     /// @brief generates single pixel dots
     static void chaos_generator(const int dmg_size, const std::function<coord()>& gen, const std::function<bool(const coord &)> &make_damage) noexcept;
+
 
     /// @variable what can i say? Enum holder
     inline static damage_kinds current_damage_kind{ damage_kinds::euclidean };
