@@ -30,7 +30,6 @@ private slots:
     void on_BtnLoad_clicked();
     void on_btnDamage_clicked();
     void on_btnFix_clicked();
-    void setDamageLbl();
     void on_btnSave_clicked();
 
     /// @brief quick overload - on resize, picture resize althrough

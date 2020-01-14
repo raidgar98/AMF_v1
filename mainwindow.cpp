@@ -78,8 +78,9 @@ void MainWindow::on_btnDamage_clicked()
 		int SizeOfDamage=ui->SpinDamSize->value();
 		int NumOfDamages=ui->SpinDamNum->value();
 
-		DamagedImage = SrcImage;
-		Map = QImage(SrcImage.size(), default_format);
+        DamagedImage = SrcImage;
+        Map = QImage(SrcImage.size(), default_format);
+        damaged_points.clear();
 
 		DamageGenerator::makeDamage(DamagedImage, damaged_points, NumOfDamages, SizeOfDamage);
 		DamageGenerator::renderMapFromRawData(damaged_points, Map);

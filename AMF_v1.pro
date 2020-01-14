@@ -28,7 +28,6 @@ SOURCES += \
         AverageFilter.cpp \
         DamageGenerator.cpp \
         baseFilter.cpp \
-#        damagekasia.cpp \
 	izimage.cpp \
 	izimageobjects.cpp \
         main.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
         AverageFilter.h \
         DamageGenerator.h \
         baseFilter.h \
-#        damagekasia.h \
 	izimage.h \
 	izimageobjects.h \
         mainwindow.h \
