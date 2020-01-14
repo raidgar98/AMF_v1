@@ -11,14 +11,27 @@ class DamageGenerator
 {
 public:
 
+
     /// @enum here are storred avaiable damage algorithms, that generates shapes:
     enum damage_kinds
     {
         euclidean,      /// @var squares
         manhattan,      /// @var ?
-        chaos           /// @var dots
+		chaos,          /// @var dots
+		snowflakes,		/// @var snowflakes
+		clouds			///	@var clouds
 
     };
+
+	inline static const std::map<	const char*, damage_kinds > enum_strings{
+		{
+			{ "Euclidean",	euclidean	},
+			{ "Manhattan",	manhattan	},
+			{ "Chaos",		chaos		},
+			{ "Snowflake",	snowflakes	},
+			{ "Cloud",		clouds		}
+		}
+	};
 
     /// @brief This is static class, no constructors at all
     DamageGenerator() = delete;

@@ -14,6 +14,8 @@ class AverageFilter
 {
 public:
 
+    SET_FILTER_NAME( "Average Filter" )
+
     /// @brief no default constructor. That's nonsense
     AverageFilter() = delete;
 

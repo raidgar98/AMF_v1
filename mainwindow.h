@@ -5,6 +5,7 @@
 
 //STL libraries
 #include <memory>
+#include <vector>
 
 //Own dependencies
 #include "DamageGenerator.h"
@@ -46,6 +47,10 @@ private:
     /// @variable storage of missed pixels
     container damaged_points;
 
+	/// @variable stores avaiable filters
+	const static std::vector< const char *> avaiable_filters;
+
 protected:
+
      DamageGenerator damage();
 };

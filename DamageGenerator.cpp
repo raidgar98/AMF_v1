@@ -39,7 +39,7 @@ void DamageGenerator::renderMapFromRawData(const container &input, QImage& outpu
 {
     output.fill(qRgba(0,0,0,255));
     for(const auto& var : input)
-        output.setPixel(var.first, qRgba(255,255,255,255));
+		output.setPixel(var.first, qRgba(255,255,255,255));
 }
 
 void DamageGenerator::euclidean_generator(const int dmg_size, const std::function<coord()>& gen, const std::function<bool(const coord &)> &make_damage) noexcept

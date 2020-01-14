@@ -4,6 +4,7 @@
 
 #define QNUM(x) QString::number(x)
 #define QPTR(x) QNUM(reinterpret_cast<unsigned long long>(x))
+#define SET_FILTER_NAME( name ) inline static const char * filter_name = name;
 
 /// @enum Simple enum, for simple log function
 enum LOG_OPTION
